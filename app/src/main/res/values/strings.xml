@@ -1,0 +1,8 @@
+<resources>
+    <string name="appName">Quick Tock</string>
+    <string name="playBtnDesc">Play Button</string>
+    <string name="stopButtonDesc">Stop Button</string>
+    <string name="pauseButtonDesc">Pause Button</string>
+    <string name="resumeButtonDesc">Resume Button</string>
+    <string name="durationLabel">%s seconds</string>
+</resources>
