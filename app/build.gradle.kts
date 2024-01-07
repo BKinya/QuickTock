@@ -15,7 +15,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "com.beatrice.quicktock.InstrumentationTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner = "com.beatrice.quicktock.InstrumentationTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -50,6 +51,11 @@ android {
             excludes += "META-INF/LICENSE-notice.md"
         }
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -69,9 +75,10 @@ dependencies {
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")//
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    testImplementation("androidx.compose.ui:ui-test-junit4")
 
     implementation ("com.tinder.statemachine:statemachine:0.2.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
@@ -86,6 +93,11 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnit5Version")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnit5Version")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$jUnit5Version")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:$jUnit5Version")
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.11.1")
+
 
     testImplementation("io.insert-koin:koin-test:$koinVersion")
     testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
@@ -94,6 +106,8 @@ dependencies {
     androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 
     testImplementation("app.cash.turbine:turbine:1.0.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
 }
 tasks.withType<Test> {
