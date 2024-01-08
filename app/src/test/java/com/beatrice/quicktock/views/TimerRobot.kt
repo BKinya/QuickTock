@@ -42,8 +42,6 @@ class TimerRobot(
     infix fun verify(block: StateTransitionVerification.() -> Unit): StateTransitionVerification {
         return StateTransitionVerification(composeTestRule).apply(block)
     }
-
-
 }
 
 class StateTransitionVerification(
@@ -62,7 +60,6 @@ class StateTransitionVerification(
     fun stopButtonPresent() {
         val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
         composeTestRule.onNodeWithContentDescription(stopBtnDesc).assertIsDisplayed()
-
     }
 
     fun playButtonNotPresent() {

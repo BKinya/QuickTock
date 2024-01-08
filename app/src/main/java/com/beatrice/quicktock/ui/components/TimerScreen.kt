@@ -7,21 +7,19 @@ import androidx.compose.ui.Modifier
 import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 
-
 @Composable
 fun TimerScreen(
     uiState: UiState,
     modifier: Modifier = Modifier,
-    sendUiEvent:(UiEvent) -> Unit
-){
+    sendUiEvent: (UiEvent) -> Unit,
+) {
     Scaffold(
-        modifier = modifier
-    ) {_ ->
+        modifier = modifier,
+    ) { _ ->
 
-        Log.d("Current_State", "is ${uiState}")
+        Log.d("Current_State", "is $uiState")
         when (uiState) {
             is UiState.Idle -> {
-
             }
 
             is UiState.CountingDown -> {
@@ -29,13 +27,12 @@ fun TimerScreen(
                     sendUiEvent = sendUiEvent,
                     duration = uiState.timeLeft,
                     showPauseButton = true,
-                    showStopButton =  true,
-                    showPlayButton = false
+                    showStopButton = true,
+                    showPlayButton = false,
                 )
             }
 
             is UiState.Paused -> {
-
             }
 
             is UiState.Finished -> {
@@ -46,13 +43,11 @@ fun TimerScreen(
                 CountDownTimer(
                     sendUiEvent = sendUiEvent,
                     duration = uiState.duration,
-                    showPlayButton = true
+                    showPlayButton = true,
                 )
             }
             else -> {
-
             }
         }
     }
-
 }

@@ -16,34 +16,45 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val dataModule = module {
-    single {
-        PreferenceDataStoreFactory.create(
-            corruptionHandler = ReplaceFileCorruptionHandler(
-                produceNewData = { emptyPreferences()}
-            ),
-            scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-            produceFile = {androidContext().dataStoreFile("user_preferences.pn")}
-        )
+val dataModule =
+    module {
+        single {
+            PreferenceDataStoreFactory.create(
+                corruptionHandler =
+                    ReplaceFileCorruptionHandler(
+                        produceNewData = { emptyPreferences() },
+                    ),
+                scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+                produceFile = { androidContext().dataStoreFile("user_preferences.pn") },
+            )
+        }
+        single {
+            TimerDataStore(
+                userPreferences = get(),
+            )
+        }
     }
-    single { TimerDataStore(
-        userPreferences = get()
-    ) }
-}
-val repositoryModule = module {
-    single<TimerRepository> { TimerRepositoryImpl(
-    dataStore =  get()
-    ) }
-}
+val repositoryModule =
+    module {
+        single<TimerRepository> {
+            TimerRepositoryImpl(
+                dataStore = get(),
+            )
+        }
+    }
 
-val utilModule = module {
-    single<CoroutineDispatcher> { Dispatchers.IO }
-}
-val vieModelModule = module {
-    viewModel { TimerViewModel(
-        timerRepository = get(),
-        dispatcher = get()
-    ) }
-}
+val utilModule =
+    module {
+        single<CoroutineDispatcher> { Dispatchers.IO }
+    }
+val vieModelModule =
+    module {
+        viewModel {
+            TimerViewModel(
+                timerRepository = get(),
+                dispatcher = get(),
+            )
+        }
+    }
 
 val appModule = listOf(dataModule, repositoryModule, utilModule, vieModelModule)

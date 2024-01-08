@@ -7,12 +7,11 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
-class TimerApplication: Application() {
-
+class TimerApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        startKoin{
+        startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@TimerApplication)
             modules(appModule)

@@ -6,25 +6,20 @@ import com.beatrice.quicktock.ui.stateMachine.UiState
 import org.junit.Rule
 import org.junit.Test
 
-
 class TimerScreenTest {
-    @get: Rule
+    @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Test
-    fun testStartCountingDown(){
-        launchTimerScreen(UiState.TimerSet(5), composeTestRule = composeTestRule){
+    fun testStartCountingDown() {
+        launchTimerScreen(UiState.TimerSet(5), composeTestRule = composeTestRule) {
             timerScreenIsPresent()
             clickPlayButton()
-        }verify{
+        } verify {
             countingDownScreenIsPresent()
             playButtonNotPresent()
             pauseButtonPresent()
             stopButtonPresent()
         }
-
     }
-
-
-
 }

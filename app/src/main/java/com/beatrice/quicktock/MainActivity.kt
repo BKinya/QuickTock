@@ -14,27 +14,25 @@ import com.beatrice.quicktock.ui.theme.QuickTockTheme
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
-   private val timerViewModel: TimerViewModel by inject()
+    private val timerViewModel: TimerViewModel by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val state = timerViewModel.uiState.collectAsStateWithLifecycle().value
             QuickTockTheme {
-                 Surface(
+                Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     TimerScreen(
                         uiState = state,
                         sendUiEvent = {
                             timerViewModel.sendEvent(it)
-                        }
+                        },
                     )
                 }
             }
         }
     }
-
-
 }
-
