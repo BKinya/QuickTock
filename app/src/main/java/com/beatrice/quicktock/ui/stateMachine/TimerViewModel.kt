@@ -1,120 +1,94 @@
 package com.beatrice.quicktock.ui.stateMachine
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beatrice.quicktock.data.repository.TimerRepository
 import com.tinder.StateMachine
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+/**
+ * TODO: How will I test this state machine ... think about it when done with the implementaion
+ */
 class TimerViewModel(
     private val timerRepository: TimerRepository,
-    val dispatcher: CoroutineDispatcher,
+    private val dispatcher: CoroutineDispatcher,
+    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect>
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.TimerSet(60))
     val uiState = _uiState.asStateFlow()
 
-    private lateinit var stateMachine: StateMachine<UiState, UiEvent, SideEffect>
+    private val transitionSharedFlow = MutableSharedFlow<StateMachine.Transition<UiState, UiEvent, SideEffect>>()
 
     init {
-        initStateMachine()
+        observeTransitions()
     }
 
-    private fun initStateMachine() {
-        stateMachine =
-            StateMachine.create<UiState, UiEvent, SideEffect> {
-                initialState(UiState.TimerSet(60))
+    fun onStartCountDown(duration: Int) {
+        viewModelScope.launch {
+            val transition =
+                stateMachine.transition(UiEvent.OnStart(duration))// This method returns and instance of Transition
+            transitionSharedFlow.emit(transition)
 
-                state<UiState.Idle> {
-                    on<UiEvent.OnStart> {
-                        transitionTo(
-                            UiState.CountingDown(60),
-                            SideEffect.DoCountDown(duration = 60),
-                        )
-                    }
-                }
+        }
+        /**
+         * Only from the transition instance could I get latest state, and any associated side effects
+         *
+         *
+         * Maybe make the transition observable...
+         * here do observer it
+         */
+    }
 
-                state<UiState.TimerSet> {
-                    on<UiEvent.OnStart> { event ->
-                        transitionTo(
-                            UiState.CountingDown(event.duration),
-                            SideEffect.DoCountDown(duration = event.duration),
-                        )
-                    }
-                }
+    fun onContinueCountingDown(timeLeft: Int) {
+        viewModelScope.launch {
+            val transition = stateMachine.transition(UiEvent.OnContinueCountDown(timeLeft))
+            transitionSharedFlow.emit(transition)
+        }
+    }
 
-                state<UiState.CountingDown> {
-                    on<UiEvent.OnContinueCountDown> { event ->
-                        transitionTo(
-                            UiState.CountingDown(event.timeLeft),
-                            SideEffect.DoCountDown(duration = event.timeLeft),
-                        )
-                    }
-                    on<UiEvent.OnPause> {
-                        transitionTo(UiState.Paused)
-                    }
+    fun onFinishCountingDown() {
+        viewModelScope.launch {
+            val transition = stateMachine.transition(UiEvent.OnFinish)
+            transitionSharedFlow.emit(transition)
+        }
 
-                    on<UiEvent.OnDismiss> {
-                        transitionTo(UiState.Idle)
-                    }
-                    on<UiEvent.OnFinish> {
-                        transitionTo(UiState.Finished)
-                    }
-                }
+    }
 
-                state<UiState.Paused> {
-                    on<UiEvent.OnResume> {
-                        transitionTo(UiState.CountingDown(0))
-                    }
+    fun observeTransitions() {
+        viewModelScope.launch {
+            transitionSharedFlow.asSharedFlow().collectLatest {
+                val validTransition = it as StateMachine.Transition.Valid
+                _uiState.value = validTransition.toState
+                val sideEffect = validTransition.sideEffect
+                Log.d("LATEST_STAAAATE", " is $it aamd ${_uiState.value}")
 
-                    on<UiEvent.OnDismiss> {
-                        transitionTo(UiState.Idle)
-                    }
-                }
 
-                state<UiState.Finished> {
-                    on<UiEvent.OnRestart> {
-                        transitionTo(UiState.CountingDown(60))
+                when (sideEffect) {
+                    is SideEffect.DoCountDown -> {
+                        countDown(sideEffect.duration)
                     }
-
-                    on<UiEvent.OnDismiss> {
-                        transitionTo(UiState.Idle)
-                        // TODO: Update shared preferences
-                    }
-                }
-
-                onTransition {
-                    // TODO: What to do with the invalid transitions????
-                    val validTransition = it as StateMachine.Transition.Valid
-                    val sideEffect = validTransition.sideEffect
-                    viewModelScope.launch(dispatcher) {
-                        _uiState.value = stateMachine.state
-                        when (sideEffect) {
-                            is SideEffect.DoCountDown -> {
-                                val timeLeft = timerRepository.countDown(sideEffect.duration)
-                                if (timeLeft > 0) {
-                                    sendEvent(UiEvent.OnContinueCountDown(timeLeft))
-                                } else {
-                                    sendEvent(UiEvent.OnFinish)
-                                }
-                            }
-
-                            else -> {
-                            }
-                        }
-                    }
+                    else -> {}
                 }
             }
+        }
     }
 
-    /**
-     * Unit test this: What will I be testing
-     *
-     */
-
-    fun sendEvent(uiEvent: UiEvent) {
-        stateMachine.transition(uiEvent)
+    fun countDown(duration: Int) {
+        viewModelScope.launch {
+            val timeLeft = timerRepository.countDown(duration)
+            if (timeLeft > 0) {
+                onContinueCountingDown(timeLeft)
+            } else {
+                onFinishCountingDown()
+            }
+        }
     }
+
 }

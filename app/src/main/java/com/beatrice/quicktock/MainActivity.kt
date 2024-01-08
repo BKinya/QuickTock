@@ -27,8 +27,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     TimerScreen(
                         uiState = state,
-                        sendUiEvent = {
-                            timerViewModel.sendEvent(it)
+                        onPlayButtonClicked = { duration ->
+                            timerViewModel.onStartCountDown(duration)
                         },
                     )
                 }

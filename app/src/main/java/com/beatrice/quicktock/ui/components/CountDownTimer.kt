@@ -25,11 +25,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.beatrice.quicktock.R
-import com.beatrice.quicktock.ui.stateMachine.UiEvent
 
 @Composable
 fun CountDownTimer(
-    sendUiEvent: (UiEvent) -> Unit,
+    onPlayButtonClicked: (Int) -> Unit,
     duration: Int,
     modifier: Modifier = Modifier,
     showPlayButton: Boolean = false,
@@ -62,15 +61,11 @@ fun CountDownTimer(
              */
             ActionButton(
                 resourceId = R.drawable.ic_play,
-                onButtonClicked = { sendUiEvent(UiEvent.OnStart(duration)) },
+                onButtonClicked = {
+                    onPlayButtonClicked(duration)
+                },
                 conteDescription = stringResource(id = R.string.playBtnDesc),
                 isVisible = showPlayButton,
-            )
-            ActionButton(
-                resourceId = R.drawable.ic_stop,
-                onButtonClicked = { /*TODO*/ },
-                conteDescription = stringResource(id = R.string.stopButtonDesc),
-                isVisible = showStopButton,
             )
             ActionButton(
                 resourceId = R.drawable.ic_pause,
@@ -78,11 +73,19 @@ fun CountDownTimer(
                 conteDescription = stringResource(id = R.string.pauseButtonDesc),
                 isVisible = showPauseButton,
             )
+
+
             ActionButton(
                 resourceId = R.drawable.ic_resume,
                 onButtonClicked = { /*TODO*/ },
                 conteDescription = stringResource(id = R.string.resumeButtonDesc),
                 isVisible = showResumeButton,
+            )
+            ActionButton(
+                resourceId = R.drawable.ic_stop,
+                onButtonClicked = { /*TODO*/ },
+                conteDescription = stringResource(id = R.string.stopButtonDesc),
+                isVisible = showStopButton,
             )
         }
     }

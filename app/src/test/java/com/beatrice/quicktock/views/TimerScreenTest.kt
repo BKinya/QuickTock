@@ -12,11 +12,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
 
-/**
- * Todo:
- *  3. continue with the implementation
- *  4. Continue with my course
- */
 @RunWith(RobolectricTestRunner::class)
 @Config(application = TestApplication::class)
 class TimerScreenTest : KoinTest {
@@ -41,4 +36,24 @@ class TimerScreenTest : KoinTest {
             stopButtonPresent()
         }
     }
+
+    /**
+     * When in [CountingDown] state, clicking pause button should transition to [Paused] State
+     * In pause state show resumed and stop buttons
+     */
+    /**
+     * Rememeber your tests are independent
+     * so I need a new state for every test
+     */
+//    @Test
+//    fun testPausedState(){
+//        launchTimerScreen(composeTestRule = composeTestRule){
+//            countingDownScreenIsPresent()// this one has to come from state
+//            clickPauseButton()
+//        } verify {
+//            // Counting down has stopped
+//            // Resume and stop buttons are present
+//        }
+//
+//    }
 }

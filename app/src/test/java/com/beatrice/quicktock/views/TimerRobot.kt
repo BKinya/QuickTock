@@ -10,12 +10,6 @@ import com.beatrice.quicktock.MainActivity
 import com.beatrice.quicktock.R
 
 fun launchTimerScreen(
-    /**
-     * This state is not doing much right now coz I'm using the state created in the real VM
-     * Next thing coz eventually I have to do it is to pass the state machine as a variable
-     * and maybe make the transition as infix function or sth similar
-     */
-
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
     block: TimerRobot.() -> Unit,
 ): TimerRobot {

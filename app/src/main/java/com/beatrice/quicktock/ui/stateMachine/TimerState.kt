@@ -7,7 +7,7 @@ sealed interface UiState {
 
     @JvmInline value class CountingDown(val timeLeft: Int) : UiState
 
-    data object Paused : UiState
+    @JvmInline value class Paused(val timeLeft: Int) : UiState
 
     data object Finished : UiState
 }
