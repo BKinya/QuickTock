@@ -1,11 +1,13 @@
 package com.beatrice.quicktock.views
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ActivityScenario
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.beatrice.quicktock.MainActivity
 import com.beatrice.quicktock.R
 
@@ -16,81 +18,57 @@ fun launchTimerScreen(
      * and maybe make the transition as infix function or sth similar
      */
 
-    composeTestRule: ComposeContentTestRule,
+    composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
     block: TimerRobot.() -> Unit,
-): TimerRobot{
+): TimerRobot {
     return TimerRobot(
         composeTestRule,
-    ).apply (block)
+    ).apply(block)
 }
 
 class TimerRobot(
-    private val composeTestRule: ComposeContentTestRule,
-){
-
-    private lateinit var activityScenario: ActivityScenario<MainActivity>
-    fun startMainActivity(){
-      activityScenario =  ActivityScenario.launch(MainActivity::class.java)
-    }
-
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
+) {
     fun timerScreenIsPresent() {
-        activityScenario.onActivity {
-            val duration = it.getString(R.string.durationLabel, 60)
-            composeTestRule.onNodeWithText(duration).assertIsDisplayed()
-        }
-
-
-
+        val duration = composeTestRule.activity.getString(R.string.durationLabel, 60)
+        composeTestRule.onNodeWithText(duration).assertIsDisplayed()
     }
-    fun clickPlayButton(){
-        activityScenario.onActivity {
-            val playButtonDesc = it.getString(R.string.playBtnDesc)
-            composeTestRule.onNodeWithContentDescription(playButtonDesc)
-                .assertIsDisplayed()
-                .performClick()
-        }
 
-
+    fun clickPlayButton() {
+        val playButtonDesc = composeTestRule.activity.getString(R.string.playBtnDesc)
+        composeTestRule.onNodeWithContentDescription(playButtonDesc)
+            .assertIsDisplayed()
+            .performClick()
     }
-    infix fun verify(block: StateTransitionVerification.() -> Unit) : StateTransitionVerification{
-        return StateTransitionVerification(composeTestRule, activityScenario).apply(block)
+
+    infix fun verify(block: StateTransitionVerification.() -> Unit): StateTransitionVerification {
+        return StateTransitionVerification(composeTestRule).apply(block)
     }
 
 
 }
 
 class StateTransitionVerification(
-    private val composeTestRule: ComposeContentTestRule,
-    private val activityScenario: ActivityScenario<MainActivity>
-){
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
+) {
     fun countingDownScreenIsPresent() {
-
-        activityScenario.onActivity {
-            val timeLeft =it.getString(R.string.durationLabel, 47)
-            composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
-        }
+        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, 47)
+        composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
 
     fun pauseButtonPresent() {
-        activityScenario.onActivity {
-            val pauseBtnDesc = it.getString(R.string.pauseButtonDesc)
-            composeTestRule.onNodeWithContentDescription(pauseBtnDesc).assertIsDisplayed()
-        }
+        val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
+        composeTestRule.onNodeWithContentDescription(pauseBtnDesc).assertIsDisplayed()
     }
 
     fun stopButtonPresent() {
-        activityScenario.onActivity {
-            val stopBtnDesc = it.getString(R.string.stopButtonDesc)
-            composeTestRule.onNodeWithContentDescription(stopBtnDesc).assertIsDisplayed()
-        }
+        val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
+        composeTestRule.onNodeWithContentDescription(stopBtnDesc).assertIsDisplayed()
+
     }
 
     fun playButtonNotPresent() {
-        activityScenario.onActivity {
-            val playButtonDesc = it.getString(R.string.playBtnDesc)
-            composeTestRule.onNodeWithContentDescription(playButtonDesc).assertDoesNotExist()
-        }
+        val playButtonDesc = composeTestRule.activity.getString(R.string.playBtnDesc)
+        composeTestRule.onNodeWithContentDescription(playButtonDesc).assertDoesNotExist()
     }
-
-
 }
