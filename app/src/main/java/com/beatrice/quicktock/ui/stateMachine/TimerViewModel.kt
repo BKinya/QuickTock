@@ -1,6 +1,5 @@
 package com.beatrice.quicktock.ui.stateMachine
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beatrice.quicktock.data.repository.TimerRepository
@@ -39,13 +38,6 @@ class TimerViewModel(
             transitionSharedFlow.emit(transition)
 
         }
-        /**
-         * Only from the transition instance could I get latest state, and any associated side effects
-         *
-         *
-         * Maybe make the transition observable...
-         * here do observer it
-         */
     }
 
     fun onContinueCountingDown(timeLeft: Int) {
@@ -74,12 +66,15 @@ class TimerViewModel(
                     }
                     is SideEffect.ContinueCountDown -> {
                         countDown(sideEffect.timeLeft)
-                    }
+                }
+
+
                     else -> {}
+                }
+
                 }
             }
         }
-    }
 
    private fun countDown(duration: Int) {
         viewModelScope.launch {
