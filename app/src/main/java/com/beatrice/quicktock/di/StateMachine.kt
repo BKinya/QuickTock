@@ -5,6 +5,8 @@ import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.tinder.StateMachine
 
+
+
 fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
     return StateMachine.create {
         initialState(UiState.TimerSet(60))
@@ -65,9 +67,5 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
             }
         }
 
-        onTransition {
-            // here I am doing the flow update
-            // and handling side effects
-        }
     }
 }

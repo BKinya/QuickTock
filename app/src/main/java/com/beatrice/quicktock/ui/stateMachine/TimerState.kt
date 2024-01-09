@@ -5,6 +5,7 @@ sealed interface UiState {
 
     @JvmInline value class TimerSet(val duration: Int) : UiState
 
+
     @JvmInline value class CountingDown(val timeLeft: Int) : UiState
 
     @JvmInline value class Paused(val timeLeft: Int) : UiState

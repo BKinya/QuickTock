@@ -67,7 +67,7 @@ class TimerViewModel(
                 val validTransition = it as StateMachine.Transition.Valid
                 _uiState.value = validTransition.toState
                 val sideEffect = validTransition.sideEffect
-                Log.d("LATEST_STAAAATE", " is $it aamd ${_uiState.value}")
+
 
 
                 when (sideEffect) {
@@ -84,6 +84,7 @@ class TimerViewModel(
         viewModelScope.launch {
             val timeLeft = timerRepository.countDown(duration)
             if (timeLeft > 0) {
+                // This in itself is a side effect
                 onContinueCountingDown(timeLeft)
             } else {
                 onFinishCountingDown()
