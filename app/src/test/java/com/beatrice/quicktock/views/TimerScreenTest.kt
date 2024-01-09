@@ -32,8 +32,6 @@ class TimerScreenTest : KoinTest {
         } verify {
             countingDownScreenIsPresent()
             playButtonNotPresent()
-            pauseButtonPresent()
-            stopButtonPresent()
         }
     }
 

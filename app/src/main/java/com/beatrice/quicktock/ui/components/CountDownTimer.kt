@@ -55,10 +55,6 @@ fun CountDownTimer(
         )
         Spacer(modifier = Modifier.height(36.dp))
         Row {
-            /**
-             * When you click play button what should happen
-             * Start reducing it and send the new values to the UI
-             */
             ActionButton(
                 resourceId = R.drawable.ic_play,
                 onButtonClicked = {

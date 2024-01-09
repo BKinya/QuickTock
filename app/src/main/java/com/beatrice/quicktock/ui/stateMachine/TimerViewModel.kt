@@ -14,7 +14,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
- * TODO: How will I test this state machine ... think about it when done with the implementaion
+ * Todo: Unit test updating the value of _uistate
+ * I think now I'm fine to use advanceBy method
  */
 class TimerViewModel(
     private val timerRepository: TimerRepository,
@@ -33,7 +34,8 @@ class TimerViewModel(
     fun onStartCountDown(duration: Int) {
         viewModelScope.launch {
             val transition =
-                stateMachine.transition(UiEvent.OnStart(duration))// This method returns and instance of Transition
+                stateMachine.transition(UiEvent.OnStart(duration))
+
             transitionSharedFlow.emit(transition)
 
         }
@@ -66,13 +68,12 @@ class TimerViewModel(
             transitionSharedFlow.asSharedFlow().collectLatest {
                 val validTransition = it as StateMachine.Transition.Valid
                 _uiState.value = validTransition.toState
-                val sideEffect = validTransition.sideEffect
-
-
-
-                when (sideEffect) {
-                    is SideEffect.DoCountDown -> {
-                        countDown(sideEffect.duration)
+                when (val sideEffect = validTransition.sideEffect) {
+                    is SideEffect.StartCountDown -> {
+                        countDown(sideEffect.duration) // side effect should generate an event
+                    }
+                    is SideEffect.ContinueCountDown -> {
+                        countDown(sideEffect.timeLeft)
                     }
                     else -> {}
                 }
@@ -80,16 +81,14 @@ class TimerViewModel(
         }
     }
 
-    fun countDown(duration: Int) {
+   private fun countDown(duration: Int) {
         viewModelScope.launch {
             val timeLeft = timerRepository.countDown(duration)
-            if (timeLeft > 0) {
-                // This in itself is a side effect
-                onContinueCountingDown(timeLeft)
-            } else {
-                onFinishCountingDown()
-            }
+//            if (timeLeft > 0) {
+//                onContinueCountingDown(timeLeft)
+//            } else {
+//                onFinishCountingDown()
+//            }
         }
     }
-
 }

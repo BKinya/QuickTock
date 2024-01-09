@@ -6,34 +6,28 @@ import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.tinder.StateMachine
 
 
-
 fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
     return StateMachine.create {
         initialState(UiState.TimerSet(60))
 
-        state<UiState.Idle> {
-            on<UiEvent.OnStart> {
-                transitionTo(
-                    UiState.CountingDown(60),
-                    SideEffect.DoCountDown(duration = 60),
-                )
-            }
-        }
+        state<UiState.Idle> {}
 
         state<UiState.TimerSet> {
             on<UiEvent.OnStart> { event ->
                 transitionTo(
-                    UiState.CountingDown(event.duration),
-                    SideEffect.DoCountDown(duration = event.duration),
+                    UiState.StartCountingDown(event.duration),
+                    SideEffect.StartCountDown(duration = event.duration),
                 )
             }
         }
+
+        state<UiState.StartCountingDown> {  }
 
         state<UiState.CountingDown> {
             on<UiEvent.OnContinueCountDown> { event ->
                 transitionTo(
                     UiState.CountingDown(event.timeLeft),
-                    SideEffect.DoCountDown(duration = event.timeLeft),
+                    SideEffect.ContinueCountDown(timeLeft = event.timeLeft),
                 )
             }
             on<UiEvent.OnPause> {

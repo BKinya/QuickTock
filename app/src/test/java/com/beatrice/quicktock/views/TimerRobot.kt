@@ -42,7 +42,7 @@ class StateTransitionVerification(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     fun countingDownScreenIsPresent() {
-        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, 57)
+        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, 60)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
 
