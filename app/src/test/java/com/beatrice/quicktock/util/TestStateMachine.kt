@@ -5,7 +5,7 @@ import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.tinder.StateMachine
 
-fun createTestStateMachine(initialState: UiState): StateMachine<UiState, UiEvent, SideEffect> =
+fun createTestStateMachine(): StateMachine<UiState, UiEvent, SideEffect> =
     StateMachine.create {
         initialState(UiState.TimerSet(5))
 
@@ -21,12 +21,12 @@ fun createTestStateMachine(initialState: UiState): StateMachine<UiState, UiEvent
         }
 
         state<UiState.CountDownStarted> {
-            on<UiEvent.OnCountingDown> { event ->
+            on<UiEvent.OnContinueCountDown> { event ->
                 transitionTo(UiState.CountingDown(event.timeLeft))
             }
         }
         state<UiState.CountingDown> {
-            on<UiEvent.OnCountingDown> { event ->
+            on<UiEvent.OnContinueCountDown> { event ->
                 transitionTo(
                     UiState.CountingDown(event.timeLeft),
                 )

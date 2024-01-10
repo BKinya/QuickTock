@@ -25,7 +25,7 @@ class TimerRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     fun timerScreenIsPresent() {
-        val duration = composeTestRule.activity.getString(R.string.durationLabel, 10)
+        val duration = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
         composeTestRule.onNodeWithText(duration).assertIsDisplayed()
     }
 

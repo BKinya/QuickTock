@@ -18,7 +18,7 @@ import kotlin.test.assertEquals
 
 @ExtendWith(MainDispatcherExtension::class)
 class TimerViewModelTest {
-    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createTestStateMachine(UiState.TimerSet(5))
+    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createTestStateMachine()
     private val timerRepository = FakeTimerRepository()
 
     @OptIn(ExperimentalCoroutinesApi::class)

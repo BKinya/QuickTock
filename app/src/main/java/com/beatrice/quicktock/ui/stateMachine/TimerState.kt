@@ -17,7 +17,7 @@ sealed interface UiState {
 sealed interface UiEvent {
     @JvmInline value class OnStart(val duration: Int) : UiEvent
 
-    @JvmInline value class OnCountingDown(val timeLeft: Int) : UiEvent
+    @JvmInline value class OnContinueCountDown(val timeLeft: Int) : UiEvent
 
     data object OnFinish : UiEvent
 

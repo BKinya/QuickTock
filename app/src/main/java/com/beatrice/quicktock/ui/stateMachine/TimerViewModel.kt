@@ -1,6 +1,5 @@
 package com.beatrice.quicktock.ui.stateMachine
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beatrice.quicktock.data.repository.TimerRepository
@@ -22,7 +21,7 @@ class TimerViewModel(
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.TimerSet(10))
     val uiState = _uiState.asStateFlow()
 
-    private val transitionSharedFlow = MutableSharedFlow<StateMachine.Transition<UiState, UiEvent, SideEffect>>()
+    private val transitionSharedFlow = MutableSharedFlow<StateMachine.Transition<UiState, UiEvent, SideEffect>>(10)
 
     init {
         observeTransitions()
@@ -38,7 +37,7 @@ class TimerViewModel(
 
     fun onContinueCountingDown(timeLeft: Int) {
         viewModelScope.launch(dispatcher) {
-            val transition = stateMachine.transition(UiEvent.OnCountingDown(timeLeft))
+            val transition = stateMachine.transition(UiEvent.OnContinueCountDown(timeLeft))
             transitionSharedFlow.emit(transition)
         }
     }
@@ -70,13 +69,12 @@ class TimerViewModel(
         viewModelScope.launch(dispatcher) {
             timerRepository.doCountDown(duration)
                 .onCompletion {
-                    println("saaad ${it?.message} or $this")
-//                    Log.d("WELLL", "iii $this. or ${it?.message}")
-                    onFinishCountingDown()/// I want to unit test this
+                    onFinishCountingDown()
                 }
                 .collectLatest { timeLeft ->
                     onContinueCountingDown(timeLeft)
                 }
         }
     }
+
 }

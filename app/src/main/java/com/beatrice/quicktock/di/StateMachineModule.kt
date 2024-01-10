@@ -21,12 +21,12 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
         }
 
         state<UiState.CountDownStarted> {
-            on<UiEvent.OnCountingDown> { event ->
+            on<UiEvent.OnContinueCountDown> { event ->
                 transitionTo(UiState.CountingDown(event.timeLeft))
             }
         }
         state<UiState.CountingDown> {
-            on<UiEvent.OnCountingDown> { event ->
+            on<UiEvent.OnContinueCountDown> { event ->
                 transitionTo(
                     UiState.CountingDown(event.timeLeft),
                 )
