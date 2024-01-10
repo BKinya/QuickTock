@@ -1,5 +1,6 @@
 package com.beatrice.quicktock.ui.stateMachine
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beatrice.quicktock.data.repository.TimerRepository
@@ -69,6 +70,9 @@ class TimerViewModel(
         viewModelScope.launch(dispatcher) {
             timerRepository.doCountDown(duration)
                 .onCompletion {
+                    println("saaad ${it?.message} or $this")
+//                    Log.d("WELLL", "iii $this. or ${it?.message}")
+                    onFinishCountingDown()/// I want to unit test this
                 }
                 .collectLatest { timeLeft ->
                     onContinueCountingDown(timeLeft)

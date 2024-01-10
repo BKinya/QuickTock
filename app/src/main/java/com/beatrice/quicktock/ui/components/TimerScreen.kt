@@ -1,6 +1,7 @@
 package com.beatrice.quicktock.ui.components
 
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.beatrice.quicktock.ui.stateMachine.UiState
@@ -14,6 +15,7 @@ fun TimerScreen(
     Scaffold(
         modifier = modifier,
     ) { _ ->
+        println("State is $uiState")
 
         when (uiState) {
             is UiState.Idle -> {
@@ -44,6 +46,7 @@ fun TimerScreen(
 
             is UiState.Finished -> {
                 // Show some fancy animations
+                Text("Finished")
             }
             is UiState.TimerSet -> {
                 CountDownTimer(

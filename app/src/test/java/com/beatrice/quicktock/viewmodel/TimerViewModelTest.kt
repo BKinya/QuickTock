@@ -37,6 +37,8 @@ class TimerViewModelTest {
                 viewModel.onStartCountDown(5)
                 assertEquals(UiState.CountDownStarted(5), awaitItem())
                 assertEquals(UiState.CountingDown(2), awaitItem())
+                assertEquals(UiState.Finished, awaitItem())
             }
         }
+
 }

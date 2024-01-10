@@ -60,4 +60,8 @@ class StateTransitionVerification(
         val playButtonDesc = composeTestRule.activity.getString(R.string.playBtnDesc)
         composeTestRule.onNodeWithContentDescription(playButtonDesc).assertDoesNotExist()
     }
+
+    fun countDownFinishedScreenPresent() {
+        composeTestRule.onNodeWithText("Finished").assertIsDisplayed()
+    }
 }

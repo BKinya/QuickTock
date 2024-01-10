@@ -7,7 +7,7 @@ import com.tinder.StateMachine
 
 fun createTestStateMachine(initialState: UiState): StateMachine<UiState, UiEvent, SideEffect> =
     StateMachine.create {
-        initialState(UiState.TimerSet(10))
+        initialState(UiState.TimerSet(5))
 
         state<UiState.Idle> {}
 
