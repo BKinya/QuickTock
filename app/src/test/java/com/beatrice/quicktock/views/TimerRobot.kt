@@ -22,7 +22,7 @@ class TimerRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     fun timerScreenIsPresent() {
-        val duration = composeTestRule.activity.getString(R.string.durationLabel, 60)
+        val duration = composeTestRule.activity.getString(R.string.durationLabel, 10)
         composeTestRule.onNodeWithText(duration).assertIsDisplayed()
     }
 
@@ -42,7 +42,7 @@ class StateTransitionVerification(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     fun countingDownScreenIsPresent() {
-        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, 60)
+        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, 2)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
 

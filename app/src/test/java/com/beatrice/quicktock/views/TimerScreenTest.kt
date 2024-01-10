@@ -1,13 +1,14 @@
 package com.beatrice.quicktock.views
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+
+androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.beatrice.quicktock.MainActivity
 import com.beatrice.quicktock.TestApplication
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -32,6 +33,8 @@ class TimerScreenTest : KoinTest {
             clickPlayButton()
         } verify {
             countingDownScreenIsPresent()
+            pauseButtonPresent()
+            stopButtonPresent()
             playButtonNotPresent()
         }
     }

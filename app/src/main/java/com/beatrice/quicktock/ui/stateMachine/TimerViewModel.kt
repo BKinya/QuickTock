@@ -1,6 +1,5 @@
 package com.beatrice.quicktock.ui.stateMachine
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beatrice.quicktock.data.repository.TimerRepository
@@ -14,11 +13,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 
-/**
- * Todo: Unit test updating the value of _uistate
- * I think now I'm fine to use advanceBy method
- * NOOOOOO good news yet
- */
+
 class TimerViewModel(
     private val timerRepository: TimerRepository,
     private val stateMachine: StateMachine<UiState, UiEvent, SideEffect>,
@@ -35,7 +30,6 @@ class TimerViewModel(
 
     fun onStartCountDown(duration: Int) {
         viewModelScope.launch(dispatcher) {
-            println("Sending it out $duration")
             val transition =
                 stateMachine.transition(UiEvent.OnStart(duration))
             transitionSharedFlow.emit(transition)
@@ -84,8 +78,6 @@ class TimerViewModel(
                .collectLatest {timeLeft ->
                onContinueCountingDown(timeLeft)
            }
-
-
         }
     }
 }

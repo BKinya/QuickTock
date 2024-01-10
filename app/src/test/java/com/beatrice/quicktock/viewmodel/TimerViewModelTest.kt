@@ -19,27 +19,26 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 
 @ExtendWith(MainDispatcherExtension::class)
-class TimerViewModelTest{
+class TimerViewModelTest {
 
 
-  private  val stateMachine: StateMachine<UiState, UiEvent, SideEffect>  = createTestStateMachine(UiState.TimerSet(5))
-  private  val timerRepository = FakeTimerRepository()
-   @OptIn(ExperimentalCoroutinesApi::class)
-   private val viewModel = TimerViewModel(
+    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createTestStateMachine(UiState.TimerSet(5))
+    private val timerRepository = FakeTimerRepository()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val viewModel = TimerViewModel(
         timerRepository = timerRepository,
         stateMachine = stateMachine,
-       dispatcher = UnconfinedTestDispatcher()
+        dispatcher = UnconfinedTestDispatcher()
     )
 
     @Test
-    fun test1() = runTest{
+    fun `update value of uiState to CountingDown when the StateMachine transitions to CountingDown state`() = runTest {
         viewModel.uiState.test {
             assertEquals(UiState.TimerSet(10), awaitItem())
             viewModel.onStartCountDown(5)
             assertEquals(UiState.CountDownStarted(5), awaitItem())
             assertEquals(UiState.CountingDown(2), awaitItem())
-
         }
-
     }
 }
