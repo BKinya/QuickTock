@@ -9,15 +9,12 @@ import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback
 import org.junit.jupiter.api.extension.ExtensionContext
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MainDispatcherExtension(
     private val testDispatcher: TestDispatcher =
         UnconfinedTestDispatcher(),
 ) : BeforeTestExecutionCallback, AfterTestExecutionCallback {
-
     override fun beforeTestExecution(context: ExtensionContext?) {
         Dispatchers.setMain(testDispatcher)
     }
@@ -26,5 +23,3 @@ class MainDispatcherExtension(
         Dispatchers.resetMain()
     }
 }
-
-

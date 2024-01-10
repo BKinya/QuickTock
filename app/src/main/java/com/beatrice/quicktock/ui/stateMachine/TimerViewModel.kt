@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 
-
 class TimerViewModel(
     private val timerRepository: TimerRepository,
     private val stateMachine: StateMachine<UiState, UiEvent, SideEffect>,
@@ -33,7 +32,6 @@ class TimerViewModel(
             val transition =
                 stateMachine.transition(UiEvent.OnStart(duration))
             transitionSharedFlow.emit(transition)
-
         }
     }
 
@@ -49,13 +47,11 @@ class TimerViewModel(
             val transition = stateMachine.transition(UiEvent.OnFinish)
             transitionSharedFlow.emit(transition)
         }
-
     }
 
     fun observeTransitions() {
         viewModelScope.launch(dispatcher) {
             transitionSharedFlow.asSharedFlow().collectLatest {
-
                 val validTransition = it as StateMachine.Transition.Valid
                 _uiState.value = validTransition.toState
                 when (val sideEffect = validTransition.sideEffect) {
@@ -63,21 +59,20 @@ class TimerViewModel(
                         countDown(sideEffect.duration)
                     }
 
-                   else -> {}
+                    else -> {}
                 }
-
             }
         }
     }
 
     private fun countDown(duration: Int) {
         viewModelScope.launch(dispatcher) {
-           timerRepository.doCountDown(duration)
-               .onCompletion {
-               }
-               .collectLatest {timeLeft ->
-               onContinueCountingDown(timeLeft)
-           }
+            timerRepository.doCountDown(duration)
+                .onCompletion {
+                }
+                .collectLatest { timeLeft ->
+                    onContinueCountingDown(timeLeft)
+                }
         }
     }
 }

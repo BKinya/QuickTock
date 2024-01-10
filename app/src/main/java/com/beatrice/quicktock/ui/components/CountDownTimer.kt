@@ -70,7 +70,6 @@ fun CountDownTimer(
                 isVisible = showPauseButton,
             )
 
-
             ActionButton(
                 resourceId = R.drawable.ic_resume,
                 onButtonClicked = { /*TODO*/ },

@@ -3,6 +3,7 @@ package com.beatrice.quicktock
 import android.app.Application
 import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
+
 // TODO: Maybe I do not need this
 class InstrumentationTestRunner : AndroidJUnitRunner() {
     override fun newApplication(

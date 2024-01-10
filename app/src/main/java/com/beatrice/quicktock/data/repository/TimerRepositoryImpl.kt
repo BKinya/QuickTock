@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.flow
 class TimerRepositoryImpl(
     private val dataStore: TimerDataStore,
 ) : TimerRepository {
-    override fun doCountDown(duration: Int): Flow<Int> = flow {
-        for(i in duration   downTo 0 step 1){
-            delay(1000)
-            emit(i)
+    override fun doCountDown(duration: Int): Flow<Int> =
+        flow {
+            for (i in duration downTo 0 step 1) {
+                delay(1000)
+                emit(i)
+            }
         }
-    }
 
     override suspend fun setTimer(duration: Int): Flow<Boolean> = dataStore.setTimer(duration)
 

@@ -5,7 +5,6 @@ import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.tinder.StateMachine
 
-
 fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
     return StateMachine.create {
         initialState(UiState.TimerSet(60))
@@ -22,7 +21,7 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
         }
 
         state<UiState.CountDownStarted> {
-            on<UiEvent.OnCountingDown> {event ->
+            on<UiEvent.OnCountingDown> { event ->
                 transitionTo(UiState.CountingDown(event.timeLeft))
             }
         }
@@ -30,7 +29,6 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
             on<UiEvent.OnCountingDown> { event ->
                 transitionTo(
                     UiState.CountingDown(event.timeLeft),
-
                 )
             }
             on<UiEvent.OnPause> {
@@ -63,6 +61,5 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
                 // TODO: Update shared preferences
             }
         }
-
     }
 }

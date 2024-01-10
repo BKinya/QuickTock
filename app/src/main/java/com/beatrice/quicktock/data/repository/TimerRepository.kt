@@ -3,7 +3,7 @@ package com.beatrice.quicktock.data.repository
 import kotlinx.coroutines.flow.Flow
 
 interface TimerRepository {
-     fun doCountDown(duration: Int): Flow<Int>
+    fun doCountDown(duration: Int): Flow<Int>
 
     suspend fun setTimer(duration: Int): Flow<Boolean>
 
