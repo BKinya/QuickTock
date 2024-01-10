@@ -1,7 +1,10 @@
 package com.beatrice.quicktock.views
 
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.beatrice.quicktock.MainActivity
+import com.beatrice.quicktock.R
 import com.beatrice.quicktock.TestApplication
 import org.junit.Before
 import org.junit.Rule
@@ -23,20 +26,24 @@ class TimerScreenTest : KoinTest {
     fun setUp() {
         ShadowLog.stream = System.out // Redirect Logcat to console
     }
-
     @Test
     fun testStartCountingDown() {
         launchTimerScreen(composeTestRule = composeTestRule) {
             timerScreenIsPresent()
             clickPlayButton()
         } verify {
-//            countingDownScreenIsPresent()
+            countingDownScreenIsPresent()
+            playButtonNotPresent()
+
+//            val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
+//            waitUntilNodeExists(hasContentDescription(pauseBtnDesc))
 //            pauseButtonPresent()
 //            stopButtonPresent()
-//            playButtonNotPresent()
-            countDownFinishedScreenPresent()
+////            countDownFinishedScreenPresent()
         }
     }
+
+
 
 
 }

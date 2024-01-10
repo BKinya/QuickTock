@@ -1,6 +1,9 @@
 package com.beatrice.quicktock.views
 
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -38,11 +41,12 @@ class TimerRobot(
     }
 }
 
+@OptIn(ExperimentalTestApi::class)
 class StateTransitionVerification(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     fun countingDownScreenIsPresent() {
-        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, 2)
+        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, 10)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
 
@@ -63,5 +67,9 @@ class StateTransitionVerification(
 
     fun countDownFinishedScreenPresent() {
         composeTestRule.onNodeWithText("Finished").assertIsDisplayed()
+    }
+
+    fun waitUntilNodeExists(matcher: SemanticsMatcher) {
+        composeTestRule.waitUntilDoesNotExist(matcher)
     }
 }
