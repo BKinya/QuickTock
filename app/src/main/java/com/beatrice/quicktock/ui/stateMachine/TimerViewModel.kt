@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 
 /**
@@ -23,7 +24,7 @@ class TimerViewModel(
     private val stateMachine: StateMachine<UiState, UiEvent, SideEffect>,
     private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
-    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.TimerSet(60))
+    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.TimerSet(10))
     val uiState = _uiState.asStateFlow()
 
     private val transitionSharedFlow = MutableSharedFlow<StateMachine.Transition<UiState, UiEvent, SideEffect>>()
@@ -37,7 +38,6 @@ class TimerViewModel(
             println("Sending it out $duration")
             val transition =
                 stateMachine.transition(UiEvent.OnStart(duration))
-
             transitionSharedFlow.emit(transition)
 
         }
@@ -45,7 +45,7 @@ class TimerViewModel(
 
     fun onContinueCountingDown(timeLeft: Int) {
         viewModelScope.launch(dispatcher) {
-            val transition = stateMachine.transition(UiEvent.OnContinueCountDown(timeLeft))
+            val transition = stateMachine.transition(UiEvent.OnCountingDown(timeLeft))
             transitionSharedFlow.emit(transition)
         }
     }
@@ -61,20 +61,15 @@ class TimerViewModel(
     fun observeTransitions() {
         viewModelScope.launch(dispatcher) {
             transitionSharedFlow.asSharedFlow().collectLatest {
-                println("hereerer $it")
 
                 val validTransition = it as StateMachine.Transition.Valid
                 _uiState.value = validTransition.toState
                 when (val sideEffect = validTransition.sideEffect) {
-                    is SideEffect.StartCountDown -> {
-                        countDown(sideEffect.duration) // side effect should generate an event
+                    is SideEffect.DoCountDown -> {
+                        countDown(sideEffect.duration)
                     }
 
-                    is SideEffect.ContinueCountDown -> {
-                        countDown(sideEffect.timeLeft)
-                    }
-
-                    else -> {}
+                   else -> {}
                 }
 
             }
@@ -83,12 +78,15 @@ class TimerViewModel(
 
     private fun countDown(duration: Int) {
         viewModelScope.launch(dispatcher) {
-            val timeLeft = timerRepository.countDown(duration)
-            if (timeLeft > 0) {
-                onContinueCountingDown(timeLeft) // sending this event from the UI... maybe not sure how to approach it yet
-            } else {
-                onFinishCountingDown()
-            }
+           timerRepository.doCountDown(duration)
+               .onCompletion {
+                   Log.d("Time_left", "completed ${it?.message}")
+               }
+               .collectLatest {timeLeft ->
+               onContinueCountingDown(timeLeft)
+           }
+
+
         }
     }
 }

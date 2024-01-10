@@ -14,13 +14,13 @@ fun createTestStateMachine(initialState: UiState) = StateMachine.create {
         on<UiEvent.OnStart> { event ->
             transitionTo(
                 UiState.StartCountingDown(event.duration),
-                SideEffect.StartCountDown(duration = event.duration),
+                SideEffect.DoCountDown(duration = event.duration),
             )
         }
     }
 
     state<UiState.StartCountingDown> {
-        on<UiEvent.OnContinueCountDown> { event ->
+        on<UiEvent.OnCountingDown> { event ->
             transitionTo(
                 UiState.CountingDown(event.timeLeft),
                 SideEffect.ContinueCountDown(timeLeft = event.timeLeft),
@@ -29,7 +29,7 @@ fun createTestStateMachine(initialState: UiState) = StateMachine.create {
     }
 
     state<UiState.CountingDown> {
-        on<UiEvent.OnContinueCountDown> { event ->
+        on<UiEvent.OnCountingDown> { event ->
             transitionTo(
                 UiState.CountingDown(event.timeLeft),
                 SideEffect.ContinueCountDown(timeLeft = event.timeLeft),

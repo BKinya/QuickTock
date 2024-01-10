@@ -5,9 +5,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class FakeTimerRepository : TimerRepository {
-    override suspend fun countDown(duration: Int): Int {
-        return 47
+    override fun doCountDown(duration: Int): Flow<Int> {
+        TODO("Not yet implemented")
     }
+
 
     override suspend fun setTimer(duration: Int): Flow<Boolean> {
         return flowOf(false)

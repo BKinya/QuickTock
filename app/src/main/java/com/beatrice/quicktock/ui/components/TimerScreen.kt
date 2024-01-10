@@ -19,10 +19,9 @@ fun TimerScreen(
             is UiState.Idle -> {
             }
 
-            is UiState.StartCountingDown->{ // TODO: Update this screen to something fancy
-                // some animation would be awesome
+            is UiState.CountDownStarted ->{ // todo do some playful animation
                 CountDownTimer(
-                    onPlayButtonClicked = onPlayButtonClicked,
+                    onPlayButtonClicked = {},
                     duration = uiState.duration,
                     showPauseButton = false,
                     showStopButton = false,
