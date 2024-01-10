@@ -29,31 +29,15 @@ class TimerViewModelTest{
         timerRepository = timerRepository,
         stateMachine = stateMachine,
        dispatcher = UnconfinedTestDispatcher()
-
     )
 
-
-    /**
-     * transition from [Start counting] state to [Counting down ]
-     * and finally [Finished] state
-     */
     @Test
     fun test1() = runTest{
-        // Arrange
-        // send the event to my state machine
-        // Act
-
-        // Assert
         viewModel.uiState.test {
-            assertEquals(UiState.TimerSet(60), awaitItem())
+            assertEquals(UiState.TimerSet(10), awaitItem())
             viewModel.onStartCountDown(5)
-            assertEquals(UiState.StartCountingDown(5), awaitItem())
-
-//            advanceTimeBy(2000)
-//            assertEquals(UiState.CountingDown(3), awaitItem())
-//            advanceTimeBy(3000)
-//            assertEquals(UiState.Finished, awaitItem())
-//            awaitComplete()
+            assertEquals(UiState.CountDownStarted(5), awaitItem())
+            assertEquals(UiState.CountingDown(2), awaitItem())
 
         }
 

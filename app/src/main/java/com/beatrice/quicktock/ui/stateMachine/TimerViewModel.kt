@@ -80,7 +80,6 @@ class TimerViewModel(
         viewModelScope.launch(dispatcher) {
            timerRepository.doCountDown(duration)
                .onCompletion {
-                   Log.d("Time_left", "completed ${it?.message}")
                }
                .collectLatest {timeLeft ->
                onContinueCountingDown(timeLeft)
