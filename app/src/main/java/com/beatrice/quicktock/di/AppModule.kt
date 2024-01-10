@@ -52,7 +52,7 @@ val repositoryModule =
 
 val utilModule =
     module {
-        single<CoroutineDispatcher> { Dispatchers.IO }
+        single<CoroutineDispatcher> { Dispatchers.Default}
     }
 val stateMachineModule = module {
     single {
@@ -64,8 +64,8 @@ val vieModelModule =
         viewModel {
             TimerViewModel(
                 timerRepository = get(),
-                dispatcher = get(),
-                stateMachine = get ()
+                stateMachine = get (),
+                dispatcher = get()
             )
         }
     }

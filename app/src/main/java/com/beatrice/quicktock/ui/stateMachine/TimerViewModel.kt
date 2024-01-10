@@ -1,5 +1,6 @@
 package com.beatrice.quicktock.ui.stateMachine
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beatrice.quicktock.data.repository.TimerRepository
@@ -15,11 +16,12 @@ import kotlinx.coroutines.launch
 /**
  * Todo: Unit test updating the value of _uistate
  * I think now I'm fine to use advanceBy method
+ * NOOOOOO good news yet
  */
 class TimerViewModel(
     private val timerRepository: TimerRepository,
+    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect>,
     private val dispatcher: CoroutineDispatcher,
-    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect>
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.TimerSet(60))
     val uiState = _uiState.asStateFlow()
@@ -31,7 +33,8 @@ class TimerViewModel(
     }
 
     fun onStartCountDown(duration: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
+            println("Sending it out $duration")
             val transition =
                 stateMachine.transition(UiEvent.OnStart(duration))
 
@@ -41,14 +44,14 @@ class TimerViewModel(
     }
 
     fun onContinueCountingDown(timeLeft: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnContinueCountDown(timeLeft))
             transitionSharedFlow.emit(transition)
         }
     }
 
     fun onFinishCountingDown() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnFinish)
             transitionSharedFlow.emit(transition)
         }
@@ -56,34 +59,36 @@ class TimerViewModel(
     }
 
     fun observeTransitions() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             transitionSharedFlow.asSharedFlow().collectLatest {
+                println("hereerer $it")
+
                 val validTransition = it as StateMachine.Transition.Valid
                 _uiState.value = validTransition.toState
                 when (val sideEffect = validTransition.sideEffect) {
                     is SideEffect.StartCountDown -> {
                         countDown(sideEffect.duration) // side effect should generate an event
                     }
+
                     is SideEffect.ContinueCountDown -> {
                         countDown(sideEffect.timeLeft)
-                }
-
+                    }
 
                     else -> {}
                 }
 
-                }
             }
         }
+    }
 
-   private fun countDown(duration: Int) {
-        viewModelScope.launch {
+    private fun countDown(duration: Int) {
+        viewModelScope.launch(dispatcher) {
             val timeLeft = timerRepository.countDown(duration)
-//            if (timeLeft > 0) {
-//                onContinueCountingDown(timeLeft)
-//            } else {
-//                onFinishCountingDown()
-//            }
+            if (timeLeft > 0) {
+                onContinueCountingDown(timeLeft) // sending this event from the UI... maybe not sure how to approach it yet
+            } else {
+                onFinishCountingDown()
+            }
         }
     }
 }
