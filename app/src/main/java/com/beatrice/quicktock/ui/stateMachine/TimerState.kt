@@ -5,6 +5,8 @@ sealed interface UiState {
 
     @JvmInline value class TimerSet(val duration: Int) : UiState
 
+    @JvmInline value class CountDownStarted(val duration: Int): UiState
+
     @JvmInline value class CountingDown(val timeLeft: Int) : UiState
 
     @JvmInline value class Paused(val timeLeft: Int) : UiState
@@ -15,7 +17,7 @@ sealed interface UiState {
 sealed interface UiEvent {
     @JvmInline value class OnStart(val duration: Int) : UiEvent
 
-    @JvmInline value class OnContinueCountDown(val timeLeft: Int) : UiEvent
+    @JvmInline value class OnCountingDown(val timeLeft: Int) : UiEvent
 
     data object OnFinish : UiEvent
 
@@ -30,8 +32,8 @@ sealed interface UiEvent {
 
 sealed interface SideEffect {
 
-    @JvmInline value class StartCountDown(val duration: Int): SideEffect
-    @JvmInline value class ContinueCountDown(val timeLeft: Int) : SideEffect
+    @JvmInline value class DoCountDown(val duration: Int): SideEffect
+
 
     data object Restarting : SideEffect
 
