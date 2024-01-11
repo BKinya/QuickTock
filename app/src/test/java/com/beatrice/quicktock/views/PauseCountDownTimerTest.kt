@@ -19,29 +19,22 @@ import org.robolectric.shadows.ShadowLog
 class PauseCountDownTimerTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
-    /**
-     * Many problems... the UI has to be in counting down state.... initial value of the VM. It is possible to update this
-     * The state machine as well.. it has to be in counting down state
-     */
-    /**
-     * I could but what about when I have more and more tests.
-     *
-     * I'll do it for this test. Then I'll figure out how to fix the tests or remove them
-     */
+
     @Before
     @Throws(Exception::class)
-    fun setUp(){
+    fun setUp() {
         composeTestRule.activity.timerViewModel.updateUiState(UiState.CountingDown(TEST_DURATION))
         ShadowLog.stream = System.out // Redirect Logcat to console
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         stopKoin()
     }
+
     @Test
-    fun `when you click pause button the app moved to PAUSED state`(){
-        launchTimerScreen(composeTestRule){
+    fun `when you click pause button the app moved to PAUSED state`() {
+        launchTimerScreen(composeTestRule) {
             durationTextIsPresent()
             stopButtonIsPresent()
             pauseButtonIsPresentAndClick()
@@ -50,9 +43,7 @@ class PauseCountDownTimerTest {
             pauseButtonNotPresent()
             stopButtonIsPresent()
             resumeButtonIsPresent()
-
         }
-
     }
     // TODO: STOP button test here
     // renaming the class

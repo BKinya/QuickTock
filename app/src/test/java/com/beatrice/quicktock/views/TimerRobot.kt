@@ -26,7 +26,7 @@ class TimerRobot(
         composeTestRule.onNodeWithText(duration).assertIsDisplayed()
     }
 
-    fun PlayButtonIsPresentAndClick() {
+    fun playButtonIsPresentAndClick() {
         val playButtonDesc = composeTestRule.activity.getString(R.string.playBtnDesc)
         composeTestRule.onNodeWithContentDescription(playButtonDesc)
             .assertIsDisplayed()
@@ -41,7 +41,6 @@ class TimerRobot(
         val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
         composeTestRule.onNodeWithContentDescription(stopBtnDesc)
             .assertIsDisplayed()
-
     }
 
     fun pauseButtonIsPresentAndClick() {
@@ -84,6 +83,4 @@ class StateTransitionVerification(
         val resumeBtnDesc = composeTestRule.activity.getString(R.string.resumeButtonDesc)
         composeTestRule.onNodeWithContentDescription(resumeBtnDesc).assertIsDisplayed()
     }
-
-
 }

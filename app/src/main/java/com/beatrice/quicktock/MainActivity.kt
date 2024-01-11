@@ -13,14 +13,6 @@ import com.beatrice.quicktock.ui.stateMachine.TimerViewModel
 import com.beatrice.quicktock.ui.theme.QuickTockTheme
 import org.koin.android.ext.android.inject
 
-/**
- * Implementing pause functionality
- *
- *
- * What should happen when a user clicks pause button
- *
- */
-
 class MainActivity : ComponentActivity() {
     val timerViewModel: TimerViewModel by inject()
 
@@ -35,9 +27,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     TimerScreen(
                         uiState = state,
-                        onPlayButtonClicked = { duration ->
-                            timerViewModel.onStartCountDown(duration)// TODO: change this to method reference
-                        },
+                        onPlayButtonClicked = timerViewModel::onStartCountDown,
                         onPauseButtonClicked = timerViewModel::onPauseCountingDown,
                     )
                 }

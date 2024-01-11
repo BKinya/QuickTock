@@ -11,7 +11,7 @@ fun TimerScreen(
     uiState: UiState,
     modifier: Modifier = Modifier,
     onPlayButtonClicked: (Int) -> Unit,
-    onPauseButtonClicked: (Int) -> Unit
+    onPauseButtonClicked: (Int) -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
@@ -40,7 +40,7 @@ fun TimerScreen(
                 CountDownTimer(
                     duration = uiState.timeLeft,
                     showStopButton = true,
-                    showResumeButton = true
+                    showResumeButton = true,
                 )
             }
 

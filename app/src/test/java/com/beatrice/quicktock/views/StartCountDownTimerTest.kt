@@ -9,6 +9,7 @@ import org.junit.runner.RunWith
 import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
+
 const val TEST_DURATION = 10
 
 @RunWith(RobolectricTestRunner::class)
@@ -21,7 +22,8 @@ class StartCountDownTimerTest {
     fun setUp() {
         ShadowLog.stream = System.out // Redirect Logcat to console
     }
-    fun tearDown(){
+
+    fun tearDown() {
         stopKoin()
     }
 
@@ -29,7 +31,7 @@ class StartCountDownTimerTest {
     fun testStartCountingDown() {
         launchTimerScreen(composeTestRule = composeTestRule) {
             durationTextIsPresent()
-            PlayButtonIsPresentAndClick()
+            playButtonIsPresentAndClick()
         } verify {
             countingDownScreenIsPresent()
             playButtonNotPresent()

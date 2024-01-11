@@ -23,15 +23,14 @@ class TimerViewModel(
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.TimerSet(10))
     val uiState = _uiState.asStateFlow()
 
-    private val transitionSharedFlow = MutableSharedFlow<StateMachine.Transition<UiState, UiEvent, SideEffect>>(10)
+    private val transitionSharedFlow =
+        MutableSharedFlow<StateMachine.Transition<UiState, UiEvent, SideEffect>>(10)
 
     private lateinit var countDownJob: Job
-
 
     init {
         observeTransitions()
     }
-
 
     fun onStartCountDown(duration: Int) {
         viewModelScope.launch(dispatcher) {
@@ -55,13 +54,18 @@ class TimerViewModel(
         }
     }
 
-    fun onPauseCountingDown(timeLeft: Int){
+    fun onPauseCountingDown(timeLeft: Int) {
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnPause(timeLeft))
             transitionSharedFlow.emit(transition)
 
             // Stop the counting down
-            if (::countDownJob.isInitialized){
+
+            /***
+             * This is a little fragile because changing the order makes test to fail
+             * FIXME: Can it be improved?
+             */
+            if (::countDownJob.isInitialized) {
                 countDownJob.cancelAndJoin()
             }
         }
@@ -80,25 +84,24 @@ class TimerViewModel(
                         else -> {}
                     }
                 }
-
             }
         }
     }
 
     private fun countDown(duration: Int) {
-       countDownJob = viewModelScope.launch(dispatcher) {
-            timerRepository.doCountDown(duration)
-                .onCompletion {
-                    onFinishCountingDown()
-                }
-                .collectLatest { timeLeft ->
-                    onContinueCountingDown(timeLeft)
-                }
-        }
+        countDownJob =
+            viewModelScope.launch(dispatcher) {
+                timerRepository.doCountDown(duration)
+                    .onCompletion {
+                        onFinishCountingDown()
+                    }
+                    .collectLatest { timeLeft ->
+                        onContinueCountingDown(timeLeft)
+                    }
+            }
     }
 
-    fun updateUiState(uiState: UiState){
+    fun updateUiState(uiState: UiState) {
         _uiState.value = uiState
     }
-
 }

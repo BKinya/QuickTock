@@ -20,9 +20,10 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MainDispatcherExtension::class)
 class CountDownViewModelTest {
-    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createStateMachine().with {
-        initialState(UiState.TimerSet(TEST_DURATION))
-    }
+    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> =
+        createStateMachine().with {
+            initialState(UiState.TimerSet(TEST_DURATION))
+        }
     private val timerRepository = FakeTimerRepository()
 
     private val viewModel =
@@ -31,7 +32,6 @@ class CountDownViewModelTest {
             stateMachine = stateMachine,
             dispatcher = UnconfinedTestDispatcher(),
         )
-
 
     @Test
     fun `update value of uiState to CountingDown when the StateMachine transitions to CountingDown state`() =
@@ -44,5 +44,4 @@ class CountDownViewModelTest {
                 assertEquals(UiState.Finished, awaitItem())
             }
         }
-
 }
