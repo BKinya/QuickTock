@@ -57,14 +57,13 @@ class TimerViewModel(
 
     fun onPauseCountingDown(timeLeft: Int){
         viewModelScope.launch(dispatcher) {
-
-            if (::countDownJob.isInitialized){
-                countDownJob.cancelAndJoin()
-
-            }
-
             val transition = stateMachine.transition(UiEvent.OnPause(timeLeft))
             transitionSharedFlow.emit(transition)
+
+            // Stop the counting down
+            if (::countDownJob.isInitialized){
+                countDownJob.cancelAndJoin()
+            }
 
 
         }
