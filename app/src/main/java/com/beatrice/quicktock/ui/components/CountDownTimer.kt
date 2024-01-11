@@ -29,9 +29,10 @@ import com.beatrice.quicktock.R
 
 @Composable
 fun CountDownTimer(
-    onPlayButtonClicked: (Int) -> Unit,
     duration: Int,
     modifier: Modifier = Modifier,
+    onPlayButtonClicked: (Int) -> Unit = {},
+    onPauseButtonClicked:(Int) -> Unit = {},
     showPlayButton: Boolean = false,
     showPauseButton: Boolean = false,
     showStopButton: Boolean = false,
@@ -66,7 +67,7 @@ fun CountDownTimer(
             )
             ActionButton(
                 resourceId = R.drawable.ic_pause,
-                onButtonClicked = { /*TODO*/ },
+                onButtonClicked = { onPauseButtonClicked(duration) },
                 conteDescription = stringResource(id = R.string.pauseButtonDesc),
                 isVisible = showPauseButton,
             )

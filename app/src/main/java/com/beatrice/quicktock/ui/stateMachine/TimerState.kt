@@ -21,7 +21,7 @@ sealed interface UiEvent {
 
     data object OnFinish : UiEvent
 
-    data object OnPause : UiEvent
+    @JvmInline value class OnPause(val timeLeft: Int): UiEvent
 
     data object OnDismiss : UiEvent
 

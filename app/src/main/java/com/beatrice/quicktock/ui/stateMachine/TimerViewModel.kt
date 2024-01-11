@@ -49,6 +49,13 @@ class TimerViewModel(
         }
     }
 
+    fun onPauseCountingDown(timeLeft: Int){
+        viewModelScope.launch(dispatcher) {
+            val transition = stateMachine.transition(UiEvent.OnPause(timeLeft))
+            transitionSharedFlow.emit(transition)
+        }
+    }
+
     fun observeTransitions() {
         viewModelScope.launch(dispatcher) {
             transitionSharedFlow.asSharedFlow().collectLatest {
