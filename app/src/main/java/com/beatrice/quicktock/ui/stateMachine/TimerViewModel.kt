@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.beatrice.quicktock.data.repository.TimerRepository
 import com.tinder.StateMachine
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -22,6 +24,9 @@ class TimerViewModel(
     val uiState = _uiState.asStateFlow()
 
     private val transitionSharedFlow = MutableSharedFlow<StateMachine.Transition<UiState, UiEvent, SideEffect>>(10)
+
+    private lateinit var countDownJob: Job
+
 
     init {
         observeTransitions()
@@ -52,29 +57,39 @@ class TimerViewModel(
 
     fun onPauseCountingDown(timeLeft: Int){
         viewModelScope.launch(dispatcher) {
+
+            if (::countDownJob.isInitialized){
+                countDownJob.cancelAndJoin()
+
+            }
+
             val transition = stateMachine.transition(UiEvent.OnPause(timeLeft))
             transitionSharedFlow.emit(transition)
+
+
         }
     }
 
     fun observeTransitions() {
         viewModelScope.launch(dispatcher) {
-            transitionSharedFlow.asSharedFlow().collectLatest {
-                val validTransition = it as StateMachine.Transition.Valid
-                _uiState.value = validTransition.toState
-                when (val sideEffect = validTransition.sideEffect) {
-                    is SideEffect.DoCountDown -> {
-                        countDown(sideEffect.duration)
-                    }
+            transitionSharedFlow.asSharedFlow().collectLatest { transition ->
+                if (transition is StateMachine.Transition.Valid) {
+                    _uiState.value = transition.toState
+                    when (val sideEffect = transition.sideEffect) {
+                        is SideEffect.DoCountDown -> {
+                            countDown(sideEffect.duration)
+                        }
 
-                    else -> {}
+                        else -> {}
+                    }
                 }
+
             }
         }
     }
 
     private fun countDown(duration: Int) {
-        viewModelScope.launch(dispatcher) {
+       countDownJob = viewModelScope.launch(dispatcher) {
             timerRepository.doCountDown(duration)
                 .onCompletion {
                     onFinishCountingDown()
