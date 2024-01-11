@@ -64,8 +64,6 @@ class TimerViewModel(
             if (::countDownJob.isInitialized){
                 countDownJob.cancelAndJoin()
             }
-
-
         }
     }
 
