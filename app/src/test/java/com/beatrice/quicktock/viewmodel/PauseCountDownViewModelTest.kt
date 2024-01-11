@@ -2,26 +2,31 @@ package com.beatrice.quicktock.viewmodel
 
 import app.cash.turbine.test
 import com.beatrice.quicktock.data.repository.fake.FakeTimerRepository
+import com.beatrice.quicktock.di.createStateMachine
 import com.beatrice.quicktock.ui.stateMachine.SideEffect
 import com.beatrice.quicktock.ui.stateMachine.TimerViewModel
 import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.beatrice.quicktock.util.MainDispatcherExtension
-import com.beatrice.quicktock.di.test.createTestStateMachine
+import com.beatrice.quicktock.views.TEST_DURATION
 import com.tinder.StateMachine
+import kotlin.test.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import kotlin.test.assertEquals
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MainDispatcherExtension::class)
-class TimerViewModelTest {
-    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createTestStateMachine(UiState.TimerSet(5))
+class PauseCountDownViewModelTest {
+    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createStateMachine().with {
+        initialState(UiState.CountingDown(TEST_DURATION))
+    }
     private val timerRepository = FakeTimerRepository()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private val viewModel =
         TimerViewModel(
             timerRepository = timerRepository,
@@ -30,18 +35,13 @@ class TimerViewModelTest {
         )
 
     @Test
-    fun `update value of uiState to CountingDown when the StateMachine transitions to CountingDown state`() =
-        runTest {
-            stateMachine.with {
-
-            }
-            viewModel.uiState.test {
-                assertEquals(UiState.TimerSet(10), awaitItem())
-                viewModel.onStartCountDown(5)
-                assertEquals(UiState.CountDownStarted(5), awaitItem())
-                assertEquals(UiState.CountingDown(2), awaitItem())
-                assertEquals(UiState.Finished, awaitItem())
-            }
+    fun test1() = runTest{
+        viewModel.uiState.test {
+            assertEquals(UiState.TimerSet(10), awaitItem())// verify initial value
+            viewModel.onPauseCountingDown(TEST_DURATION)
+            assertEquals(UiState.Paused(TEST_DURATION), awaitItem())
         }
+    }
 
+    // TODO: Test stopped state
 }
