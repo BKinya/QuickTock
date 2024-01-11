@@ -23,6 +23,11 @@ class TimerViewModel(
 
     private val transitionSharedFlow = MutableSharedFlow<StateMachine.Transition<UiState, UiEvent, SideEffect>>(10)
 
+    /**
+     * Unit test sending pause event actually stops the collection
+     * .. migty have to use delay(1000) in the test... or not coz I'm using a fake
+     */
+
     init {
         observeTransitions()
     }
@@ -82,6 +87,10 @@ class TimerViewModel(
                     onContinueCountingDown(timeLeft)
                 }
         }
+    }
+
+    fun updateUiState(uiState: UiState){
+        _uiState.value = uiState
     }
 
 }

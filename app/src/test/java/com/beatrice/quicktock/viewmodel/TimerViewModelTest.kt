@@ -7,7 +7,7 @@ import com.beatrice.quicktock.ui.stateMachine.TimerViewModel
 import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.beatrice.quicktock.util.MainDispatcherExtension
-import com.beatrice.quicktock.util.createTestStateMachine
+import com.beatrice.quicktock.di.test.createTestStateMachine
 import com.tinder.StateMachine
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -18,7 +18,7 @@ import kotlin.test.assertEquals
 
 @ExtendWith(MainDispatcherExtension::class)
 class TimerViewModelTest {
-    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createTestStateMachine()
+    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createTestStateMachine(UiState.TimerSet(5))
     private val timerRepository = FakeTimerRepository()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -32,6 +32,9 @@ class TimerViewModelTest {
     @Test
     fun `update value of uiState to CountingDown when the StateMachine transitions to CountingDown state`() =
         runTest {
+            stateMachine.with {
+
+            }
             viewModel.uiState.test {
                 assertEquals(UiState.TimerSet(10), awaitItem())
                 viewModel.onStartCountDown(5)

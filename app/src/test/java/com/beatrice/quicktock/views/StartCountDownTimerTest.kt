@@ -6,7 +6,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
 const val TEST_DURATION = 10
@@ -25,13 +24,11 @@ class StartCountDownTimerTest {
     @Test
     fun testStartCountingDown() {
         launchTimerScreen(composeTestRule = composeTestRule) {
-            timerScreenIsPresent()
-            clickPlayButton()
+            durationTextIsPresent()
+            PlayButtonIsPresentAndClick()
         } verify {
             countingDownScreenIsPresent()
             playButtonNotPresent()
-
-
         }
     }
 }

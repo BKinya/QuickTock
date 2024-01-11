@@ -1,9 +1,6 @@
 package com.beatrice.quicktock.views
 
-import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -24,12 +21,12 @@ fun launchTimerScreen(
 class TimerRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
-    fun timerScreenIsPresent() {
+    fun durationTextIsPresent() {
         val duration = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
         composeTestRule.onNodeWithText(duration).assertIsDisplayed()
     }
 
-    fun clickPlayButton() {
+    fun PlayButtonIsPresentAndClick() {
         val playButtonDesc = composeTestRule.activity.getString(R.string.playBtnDesc)
         composeTestRule.onNodeWithContentDescription(playButtonDesc)
             .assertIsDisplayed()
@@ -39,14 +36,27 @@ class TimerRobot(
     infix fun verify(block: StateTransitionVerification.() -> Unit): StateTransitionVerification {
         return StateTransitionVerification(composeTestRule).apply(block)
     }
+
+    fun stopButtonIsPresent() {
+        val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
+        composeTestRule.onNodeWithContentDescription(stopBtnDesc)
+            .assertIsDisplayed()
+
+    }
+
+    fun pauseButtonIsPresentAndClick() {
+        val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
+        composeTestRule.onNodeWithContentDescription(pauseBtnDesc)
+            .assertIsDisplayed()
+            .performClick()
+    }
 }
 
-@OptIn(ExperimentalTestApi::class)
 class StateTransitionVerification(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     fun countingDownScreenIsPresent() {
-        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, 10)
+        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
 
@@ -55,7 +65,7 @@ class StateTransitionVerification(
         composeTestRule.onNodeWithContentDescription(pauseBtnDesc).assertIsDisplayed()
     }
 
-    fun stopButtonPresent() {
+    fun stopButtonIsPresent() {
         val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
         composeTestRule.onNodeWithContentDescription(stopBtnDesc).assertIsDisplayed()
     }
@@ -65,11 +75,15 @@ class StateTransitionVerification(
         composeTestRule.onNodeWithContentDescription(playButtonDesc).assertDoesNotExist()
     }
 
-    fun countDownFinishedScreenPresent() {
-        composeTestRule.onNodeWithText("Finished").assertIsDisplayed()
+    fun pauseButtonNotPresent() {
+        val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
+        composeTestRule.onNodeWithContentDescription(pauseBtnDesc).assertDoesNotExist()
     }
 
-    fun waitUntilNodeExists(matcher: SemanticsMatcher) {
-        composeTestRule.waitUntilDoesNotExist(matcher)
+    fun resumeButtonIsPresent() {
+        val resumeBtnDesc = composeTestRule.activity.getString(R.string.resumeButtonDesc)
+        composeTestRule.onNodeWithContentDescription(resumeBtnDesc).assertIsDisplayed()
     }
+
+
 }

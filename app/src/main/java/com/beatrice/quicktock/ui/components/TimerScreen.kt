@@ -24,9 +24,6 @@ fun TimerScreen(
             is UiState.CountDownStarted -> { // todo do some playful animation
                 CountDownTimer(
                     duration = uiState.duration,
-                    showPauseButton = false,
-                    showStopButton = false,
-                    showPlayButton = false,
                 )
             }
 
@@ -36,11 +33,15 @@ fun TimerScreen(
                     duration = uiState.timeLeft,
                     showPauseButton = true,
                     showStopButton = true,
-                    showPlayButton = false,
                 )
             }
 
             is UiState.Paused -> {
+                CountDownTimer(
+                    duration = uiState.timeLeft,
+                    showStopButton = true,
+                    showResumeButton = true
+                )
             }
 
             is UiState.Finished -> {

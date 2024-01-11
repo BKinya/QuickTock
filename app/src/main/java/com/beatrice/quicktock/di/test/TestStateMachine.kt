@@ -1,13 +1,13 @@
-package com.beatrice.quicktock.util
+package com.beatrice.quicktock.di.test
 
 import com.beatrice.quicktock.ui.stateMachine.SideEffect
 import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.tinder.StateMachine
 
-fun createTestStateMachine(): StateMachine<UiState, UiEvent, SideEffect> =
+fun createTestStateMachine(initialState: UiState): StateMachine<UiState, UiEvent, SideEffect> =
     StateMachine.create {
-        initialState(UiState.TimerSet(5))
+        initialState(initialState)
 
         state<UiState.Idle> {}
 
