@@ -7,6 +7,10 @@ import androidx.compose.ui.Modifier
 import com.beatrice.quicktock.ui.components.CountDownTimer
 import com.beatrice.quicktock.ui.stateMachine.UiState
 
+/**
+ * Click stop button ... you do not save anything
+ * Should go back to where you started... TimerSet state
+ */
 @Composable
 fun TimerScreen(
     uiState: UiState,

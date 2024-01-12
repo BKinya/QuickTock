@@ -9,7 +9,7 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
     return StateMachine.create {
         initialState(UiState.TimerSet(60))
 
-        state<UiState.Idle> {}
+        state<UiState.Idle> {} // Not sure if I'll need this state or maybe rename it to starting or initial or sth like that
 
         state<UiState.TimerSet> {
             on<UiEvent.OnStart> { event ->
@@ -35,8 +35,9 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
                 transitionTo(UiState.Paused(event.timeLeft))
             }
 
-            on<UiEvent.OnDismiss> {
-                transitionTo(UiState.Idle)
+            on<UiEvent.OnStop> {
+                transitionTo(UiState.Idle) // Should take you back to the state that reads the timer duration from the sources... back to where I started
+                // Maybe this could wait just a bit until I implement reading duration from the sources
             }
             on<UiEvent.OnFinish> {
                 transitionTo(UiState.Finished)
@@ -47,7 +48,7 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
                 transitionTo(UiState.CountingDown(0))
             }
 
-            on<UiEvent.OnDismiss> {
+            on<UiEvent.OnStop> {
                 transitionTo(UiState.Idle)
             }
         }
@@ -56,7 +57,7 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
                 transitionTo(UiState.CountingDown(60))
             }
 
-            on<UiEvent.OnDismiss> {
+            on<UiEvent.OnStop> {
                 transitionTo(UiState.Idle)
                 // TODO: Update shared preferences
             }

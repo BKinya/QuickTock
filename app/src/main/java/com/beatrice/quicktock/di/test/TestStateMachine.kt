@@ -35,7 +35,7 @@ fun createTestStateMachine(initialState: UiState): StateMachine<UiState, UiEvent
                 transitionTo(UiState.Paused(this.timeLeft))
             }
 
-            on<UiEvent.OnDismiss> {
+            on<UiEvent.OnStop> {
                 transitionTo(UiState.Idle)
             }
             on<UiEvent.OnFinish> {
@@ -47,7 +47,7 @@ fun createTestStateMachine(initialState: UiState): StateMachine<UiState, UiEvent
                 transitionTo(UiState.CountingDown(0))
             }
 
-            on<UiEvent.OnDismiss> {
+            on<UiEvent.OnStop> {
                 transitionTo(UiState.Idle)
             }
         }
@@ -56,7 +56,7 @@ fun createTestStateMachine(initialState: UiState): StateMachine<UiState, UiEvent
                 transitionTo(UiState.CountingDown(60))
             }
 
-            on<UiEvent.OnDismiss> {
+            on<UiEvent.OnStop> {
                 transitionTo(UiState.Idle)
                 // TODO: Update shared preferences
             }

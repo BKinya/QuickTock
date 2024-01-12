@@ -23,7 +23,7 @@ sealed interface UiEvent {
 
     @JvmInline value class OnPause(val timeLeft: Int) : UiEvent
 
-    data object OnDismiss : UiEvent
+    data object OnStop : UiEvent
 
     data object OnRestart : UiEvent
 
@@ -35,9 +35,7 @@ sealed interface SideEffect {
 
     data object Restarting : SideEffect
 
-    data object Pause : SideEffect
 
-    data object Stop : SideEffect
 
     data object Reset : SideEffect
 }
