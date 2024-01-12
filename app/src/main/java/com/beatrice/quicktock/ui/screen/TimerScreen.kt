@@ -8,8 +8,7 @@ import com.beatrice.quicktock.ui.components.CountDownTimer
 import com.beatrice.quicktock.ui.stateMachine.UiState
 
 /**
- * Click stop button ... you do not save anything
- * Should go back to where you started... TimerSet state
+ * When you click resume button, it should go back to counting down state and with a side effect
  */
 @Composable
 fun TimerScreen(

@@ -11,18 +11,16 @@ import com.beatrice.quicktock.util.MainDispatcherExtension
 import com.beatrice.quicktock.views.TEST_DURATION
 import com.tinder.StateMachine
 import kotlin.test.assertEquals
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MainDispatcherExtension::class)
-class CountDownViewModelTest {
+class ResumeCountDownViewModelTest {
     private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> =
         createStateMachine().with {
-            initialState(UiState.TimerSet(TEST_DURATION))
+            initialState(UiState.CountingDown(TEST_DURATION))
         }
     private val timerRepository = FakeTimerRepository()
 
@@ -34,14 +32,12 @@ class CountDownViewModelTest {
         )
 
     @Test
-    fun `update value of uiState to CountingDown when the StateMachine transitions to CountingDown state`() =
-        runTest {
-            viewModel.uiState.test {
-                assertEquals(UiState.TimerSet(10), awaitItem())
-                viewModel.onStartCountDown(5)
-                assertEquals(UiState.CountDownStarted(5), awaitItem())
-                assertEquals(UiState.CountingDown(2), awaitItem())
-                assertEquals(UiState.Finished, awaitItem())
-            }
+    fun `update value of uiState to Resumed state when the StateMachine transitions to Resume state`()= runTest {
+        viewModel.uiState.test {
+            assertEquals(UiState.TimerSet(10), awaitItem())// verify initial value
+            viewModel.onResumeCountingDown(TEST_DURATION)
+            assertEquals(UiState.CountingDown(TEST_DURATION), awaitItem())
+            assertEquals(UiState.Finished, awaitItem())
         }
+    }
 }

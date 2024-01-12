@@ -19,10 +19,10 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MainDispatcherExtension::class)
-class PauseCountDownViewModelTest {
+class StartCountDownViewModelTest {
     private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> =
         createStateMachine().with {
-            initialState(UiState.CountingDown(TEST_DURATION))
+            initialState(UiState.TimerSet(TEST_DURATION))
         }
     private val timerRepository = FakeTimerRepository()
 
@@ -34,13 +34,14 @@ class PauseCountDownViewModelTest {
         )
 
     @Test
-    fun `update value of uiState to Paused when the StateMachine transitions to Paused state`() = runTest {
-        viewModel.uiState.test {
-            assertEquals(UiState.TimerSet(10), awaitItem()) // verify initial value
-            viewModel.onPauseCountingDown(TEST_DURATION)
-            assertEquals(UiState.Paused(TEST_DURATION), awaitItem())
+    fun `update value of uiState to CountingDown when the StateMachine transitions to CountingDown state`() =
+        runTest {
+            viewModel.uiState.test {
+                assertEquals(UiState.TimerSet(10), awaitItem())
+                viewModel.onStartCountDown(5)
+                assertEquals(UiState.CountDownStarted(5), awaitItem())
+                assertEquals(UiState.CountingDown(2), awaitItem())
+                assertEquals(UiState.Finished, awaitItem())
+            }
         }
-    }
-
-    // TODO: Test stopped state
 }

@@ -71,6 +71,10 @@ class TimerViewModel(
         }
     }
 
+    fun onResumeCountingDown(timeLeft: Int){
+
+    }
+
     fun observeTransitions() {
         viewModelScope.launch(dispatcher) {
             transitionSharedFlow.asSharedFlow().collectLatest { transition ->
