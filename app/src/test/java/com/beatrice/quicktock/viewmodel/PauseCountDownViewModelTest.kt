@@ -36,7 +36,7 @@ class PauseCountDownViewModelTest {
     @Test
     fun `update value of uiState to Paused when the StateMachine transitions to Paused state`() = runTest {
         viewModel.uiState.test {
-            assertEquals(UiState.TimerSet(10), awaitItem()) // verify initial value
+            assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem()) // verify initial value
             viewModel.onPauseCountingDown(TEST_DURATION)
             assertEquals(UiState.Paused(TEST_DURATION), awaitItem())
         }

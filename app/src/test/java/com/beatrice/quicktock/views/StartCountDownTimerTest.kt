@@ -11,6 +11,10 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
 
 const val TEST_DURATION = 10
+const val TIME_LEFT_ONE = 7
+const val TIME_LEFT_TWO= 1
+
+
 
 @RunWith(RobolectricTestRunner::class)
 class StartCountDownTimerTest {

@@ -9,6 +9,8 @@ import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.beatrice.quicktock.util.MainDispatcherExtension
 import com.beatrice.quicktock.views.TEST_DURATION
+import com.beatrice.quicktock.views.TIME_LEFT_ONE
+import com.beatrice.quicktock.views.TIME_LEFT_TWO
 import com.tinder.StateMachine
 import kotlin.test.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,10 +39,11 @@ class StartCountDownViewModelTest {
     fun `update value of uiState to CountingDown when the StateMachine transitions to CountingDown state`() =
         runTest {
             viewModel.uiState.test {
-                assertEquals(UiState.TimerSet(10), awaitItem())
-                viewModel.onStartCountDown(5)
-                assertEquals(UiState.CountDownStarted(5), awaitItem())
-                assertEquals(UiState.CountingDown(2), awaitItem())
+                assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem())
+                viewModel.onStartCountDown(TEST_DURATION)
+                assertEquals(UiState.CountDownStarted(TEST_DURATION), awaitItem())
+                assertEquals(UiState.CountingDown(TIME_LEFT_ONE), awaitItem())
+                assertEquals(UiState.CountingDown(TIME_LEFT_TWO), awaitItem())
                 assertEquals(UiState.Finished, awaitItem())
             }
         }

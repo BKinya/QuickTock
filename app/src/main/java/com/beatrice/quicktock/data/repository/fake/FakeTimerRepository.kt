@@ -1,13 +1,15 @@
 package com.beatrice.quicktock.data.repository.fake
 
 import com.beatrice.quicktock.data.repository.TimerRepository
+import kotlin.time.Duration
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
 class FakeTimerRepository : TimerRepository {
     override fun doCountDown(duration: Int): Flow<Int> = flow {
-        for (i in 5 downTo 0 step 3) {
+        for (i in duration downTo 0 step 3) {
+
             emit(i)
         }
     }
