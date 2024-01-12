@@ -7,15 +7,13 @@ import androidx.compose.ui.Modifier
 import com.beatrice.quicktock.ui.components.CountDownTimer
 import com.beatrice.quicktock.ui.stateMachine.UiState
 
-/**
- * When you click resume button, it should go back to counting down state and with a side effect
- */
 @Composable
 fun TimerScreen(
     uiState: UiState,
     modifier: Modifier = Modifier,
     onPlayButtonClicked: (Int) -> Unit,
-    onPauseButtonClicked: (Int) -> Unit
+    onPauseButtonClicked: (Int) -> Unit,
+    onResumeButtonClicked: (Int)-> Unit
 ) {
     Scaffold(
         modifier = modifier
@@ -44,7 +42,8 @@ fun TimerScreen(
                 CountDownTimer(
                     duration = uiState.timeLeft,
                     showStopButton = true,
-                    showResumeButton = true
+                    showResumeButton = true,
+                    onResumeButtonClicked = onResumeButtonClicked
                 )
             }
 

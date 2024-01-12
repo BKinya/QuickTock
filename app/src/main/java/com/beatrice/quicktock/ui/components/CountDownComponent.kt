@@ -32,6 +32,7 @@ fun CountDownTimer(
     modifier: Modifier = Modifier,
     onPlayButtonClicked: (Int) -> Unit = {},
     onPauseButtonClicked: (Int) -> Unit = {},
+    onResumeButtonClicked: (Int) -> Unit = {},
     showPlayButton: Boolean = false,
     showPauseButton: Boolean = false,
     showStopButton: Boolean = false,
@@ -73,7 +74,7 @@ fun CountDownTimer(
 
             ActionButton(
                 resourceId = R.drawable.ic_resume,
-                onButtonClicked = { /*TODO*/ },
+                onButtonClicked = { onResumeButtonClicked(duration) },
                 conteDescription = stringResource(id = R.string.resumeButtonDesc),
                 isVisible = showResumeButton
             )

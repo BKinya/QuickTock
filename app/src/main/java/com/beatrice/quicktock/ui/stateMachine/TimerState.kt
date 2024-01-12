@@ -27,7 +27,7 @@ sealed interface UiEvent {
 
     data object OnRestart : UiEvent
 
-    data object OnResume : UiEvent
+    @JvmInline value class OnResume(val timeLeft: Int) : UiEvent
 }
 
 sealed interface SideEffect {

@@ -72,13 +72,19 @@ class TimerViewModel(
     }
 
     fun onResumeCountingDown(timeLeft: Int){
-
+        viewModelScope.launch(dispatcher) {
+            val transition = stateMachine.transition(UiEvent.OnResume(timeLeft))
+            transitionSharedFlow.emit(transition)
+        }
     }
 
     fun observeTransitions() {
+        println("if atll it gets here")
         viewModelScope.launch(dispatcher) {
             transitionSharedFlow.asSharedFlow().collectLatest { transition ->
+                println("inside the collect block")
                 if (transition is StateMachine.Transition.Valid) {
+                    println("Successful evaluation")
                     _uiState.value = transition.toState
                     when (val sideEffect = transition.sideEffect) {
                         is SideEffect.DoCountDown -> {
