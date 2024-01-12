@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.beatrice.quicktock.ui.components.TimerScreen
+import com.beatrice.quicktock.ui.screen.TimerScreen
 import com.beatrice.quicktock.ui.stateMachine.TimerViewModel
 import com.beatrice.quicktock.ui.theme.QuickTockTheme
 import org.koin.android.ext.android.inject
