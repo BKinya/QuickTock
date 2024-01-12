@@ -11,10 +11,10 @@ fun TimerScreen(
     uiState: UiState,
     modifier: Modifier = Modifier,
     onPlayButtonClicked: (Int) -> Unit,
-    onPauseButtonClicked: (Int) -> Unit,
+    onPauseButtonClicked: (Int) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier
     ) { _ ->
 
         when (uiState) {
@@ -23,7 +23,7 @@ fun TimerScreen(
 
             is UiState.CountDownStarted -> { // todo do some playful animation
                 CountDownTimer(
-                    duration = uiState.duration,
+                    duration = uiState.duration
                 )
             }
 
@@ -32,7 +32,7 @@ fun TimerScreen(
                     onPauseButtonClicked = onPauseButtonClicked,
                     duration = uiState.timeLeft,
                     showPauseButton = true,
-                    showStopButton = true,
+                    showStopButton = true
                 )
             }
 
@@ -40,7 +40,7 @@ fun TimerScreen(
                 CountDownTimer(
                     duration = uiState.timeLeft,
                     showStopButton = true,
-                    showResumeButton = true,
+                    showResumeButton = true
                 )
             }
 
@@ -52,7 +52,7 @@ fun TimerScreen(
                 CountDownTimer(
                     onPlayButtonClicked = onPlayButtonClicked,
                     duration = uiState.duration,
-                    showPlayButton = true,
+                    showPlayButton = true
                 )
             }
             else -> {

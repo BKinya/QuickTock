@@ -15,7 +15,7 @@ fun createTestStateMachine(initialState: UiState): StateMachine<UiState, UiEvent
             on<UiEvent.OnStart> { event ->
                 transitionTo(
                     UiState.CountDownStarted(event.duration),
-                    SideEffect.DoCountDown(duration = event.duration),
+                    SideEffect.DoCountDown(duration = event.duration)
                 )
             }
         }
@@ -28,7 +28,7 @@ fun createTestStateMachine(initialState: UiState): StateMachine<UiState, UiEvent
         state<UiState.CountingDown> {
             on<UiEvent.OnContinueCountDown> { event ->
                 transitionTo(
-                    UiState.CountingDown(event.timeLeft),
+                    UiState.CountingDown(event.timeLeft)
                 )
             }
             on<UiEvent.OnPause> {

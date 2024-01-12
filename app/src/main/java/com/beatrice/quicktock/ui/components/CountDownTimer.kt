@@ -35,24 +35,24 @@ fun CountDownTimer(
     showPlayButton: Boolean = false,
     showPauseButton: Boolean = false,
     showStopButton: Boolean = false,
-    showResumeButton: Boolean = false,
+    showResumeButton: Boolean = false
 ) {
     Column(
         modifier =
-            modifier
-                .background(Color.White)
-                .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier
+            .background(Color.White)
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(72.dp))
         Text(
             text = stringResource(id = R.string.durationLabel, duration),
             style =
-                TextStyle(
-                    fontFamily = FontFamily.Serif,
-                    fontSize = 27.sp,
-                    fontWeight = FontWeight.SemiBold,
-                ),
+            TextStyle(
+                fontFamily = FontFamily.Serif,
+                fontSize = 27.sp,
+                fontWeight = FontWeight.SemiBold
+            )
         )
         Spacer(modifier = Modifier.height(36.dp))
         Row {
@@ -62,26 +62,26 @@ fun CountDownTimer(
                     onPlayButtonClicked(duration)
                 },
                 conteDescription = stringResource(id = R.string.playBtnDesc),
-                isVisible = showPlayButton,
+                isVisible = showPlayButton
             )
             ActionButton(
                 resourceId = R.drawable.ic_pause,
                 onButtonClicked = { onPauseButtonClicked(duration) },
                 conteDescription = stringResource(id = R.string.pauseButtonDesc),
-                isVisible = showPauseButton,
+                isVisible = showPauseButton
             )
 
             ActionButton(
                 resourceId = R.drawable.ic_resume,
                 onButtonClicked = { /*TODO*/ },
                 conteDescription = stringResource(id = R.string.resumeButtonDesc),
-                isVisible = showResumeButton,
+                isVisible = showResumeButton
             )
             ActionButton(
                 resourceId = R.drawable.ic_stop,
                 onButtonClicked = { /*TODO*/ },
                 conteDescription = stringResource(id = R.string.stopButtonDesc),
-                isVisible = showStopButton,
+                isVisible = showStopButton
             )
         }
     }
@@ -93,17 +93,17 @@ fun ActionButton(
     onButtonClicked: () -> Unit,
     conteDescription: String,
     modifier: Modifier = Modifier,
-    isVisible: Boolean,
+    isVisible: Boolean
 ) {
     AnimatedVisibility(visible = isVisible) {
         TextButton(
             modifier = modifier.padding(16.dp),
-            onClick = onButtonClicked,
+            onClick = onButtonClicked
         ) {
             Icon(
                 modifier = Modifier.size(64.dp),
                 painter = painterResource(id = resourceId),
-                contentDescription = conteDescription,
+                contentDescription = conteDescription
             )
         }
     }
@@ -118,8 +118,8 @@ fun ActionButtonPreview() {
         conteDescription = "",
         isVisible = true,
         modifier =
-            Modifier
-                .background(Color.White)
-                .fillMaxSize(),
+        Modifier
+            .background(Color.White)
+            .fillMaxSize()
     )
 }

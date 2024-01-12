@@ -23,12 +23,12 @@ class MainActivity : ComponentActivity() {
             QuickTockTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background,
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     TimerScreen(
                         uiState = state,
                         onPlayButtonClicked = timerViewModel::onStartCountDown,
-                        onPauseButtonClicked = timerViewModel::onPauseCountingDown,
+                        onPauseButtonClicked = timerViewModel::onPauseCountingDown
                     )
                 }
             }

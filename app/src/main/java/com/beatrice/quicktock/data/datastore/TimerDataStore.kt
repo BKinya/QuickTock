@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 val TIMER_KEY = intPreferencesKey("timer_key")
 
 class TimerDataStore(
-    private val userPreferences: DataStore<Preferences>,
+    private val userPreferences: DataStore<Preferences>
 ) {
     suspend fun getTimer(): Flow<Int> {
         return try {

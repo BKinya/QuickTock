@@ -11,15 +11,15 @@ import com.beatrice.quicktock.R
 
 fun launchTimerScreen(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
-    block: TimerRobot.() -> Unit,
+    block: TimerRobot.() -> Unit
 ): TimerRobot {
     return TimerRobot(
-        composeTestRule,
+        composeTestRule
     ).apply(block)
 }
 
 class TimerRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
     fun durationTextIsPresent() {
         val duration = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
@@ -52,7 +52,7 @@ class TimerRobot(
 }
 
 class StateTransitionVerification(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
     fun countingDownScreenIsPresent() {
         val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)

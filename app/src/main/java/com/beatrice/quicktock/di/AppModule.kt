@@ -21,16 +21,16 @@ val dataModule =
         single {
             PreferenceDataStoreFactory.create(
                 corruptionHandler =
-                    ReplaceFileCorruptionHandler(
-                        produceNewData = { emptyPreferences() },
-                    ),
+                ReplaceFileCorruptionHandler(
+                    produceNewData = { emptyPreferences() }
+                ),
                 scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-                produceFile = { androidContext().dataStoreFile("user_preferences.pn") },
+                produceFile = { androidContext().dataStoreFile("user_preferences.pn") }
             )
         }
         single {
             TimerDataStore(
-                userPreferences = get(),
+                userPreferences = get()
             )
         }
     }
@@ -38,7 +38,7 @@ val repositoryModule =
     module {
         single<TimerRepository> {
             TimerRepositoryImpl(
-                dataStore = get(),
+                dataStore = get()
             )
         }
     }
@@ -59,7 +59,7 @@ val vieModelModule =
             TimerViewModel(
                 timerRepository = get(),
                 stateMachine = get(),
-                dispatcher = get(),
+                dispatcher = get()
             )
         }
     }

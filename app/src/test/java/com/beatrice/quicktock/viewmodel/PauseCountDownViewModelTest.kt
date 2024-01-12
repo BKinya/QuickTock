@@ -10,12 +10,12 @@ import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.beatrice.quicktock.util.MainDispatcherExtension
 import com.beatrice.quicktock.views.TEST_DURATION
 import com.tinder.StateMachine
+import kotlin.test.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MainDispatcherExtension::class)
@@ -30,18 +30,17 @@ class PauseCountDownViewModelTest {
         TimerViewModel(
             timerRepository = timerRepository,
             stateMachine = stateMachine,
-            dispatcher = UnconfinedTestDispatcher(),
+            dispatcher = UnconfinedTestDispatcher()
         )
 
     @Test
-    fun test1() =
-        runTest {
-            viewModel.uiState.test {
-                assertEquals(UiState.TimerSet(10), awaitItem()) // verify initial value
-                viewModel.onPauseCountingDown(TEST_DURATION)
-                assertEquals(UiState.Paused(TEST_DURATION), awaitItem())
-            }
+    fun test1() = runTest {
+        viewModel.uiState.test {
+            assertEquals(UiState.TimerSet(10), awaitItem()) // verify initial value
+            viewModel.onPauseCountingDown(TEST_DURATION)
+            assertEquals(UiState.Paused(TEST_DURATION), awaitItem())
         }
+    }
 
     // TODO: Test stopped state
 }

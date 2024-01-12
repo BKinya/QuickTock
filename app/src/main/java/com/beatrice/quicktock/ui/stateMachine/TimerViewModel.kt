@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class TimerViewModel(
     private val timerRepository: TimerRepository,
     private val stateMachine: StateMachine<UiState, UiEvent, SideEffect>,
-    private val dispatcher: CoroutineDispatcher,
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.TimerSet(10))
     val uiState = _uiState.asStateFlow()
