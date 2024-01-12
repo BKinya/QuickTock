@@ -1,6 +1,6 @@
 package com.beatrice.quicktock.views
 
-class CountingDownToFinishStateTest {
+class CountingDownToFinishTest {
     /**
      * FIXME: Write integration test for when the app moves from
      *       [CountingDownStarted] state to [CountingDown] state

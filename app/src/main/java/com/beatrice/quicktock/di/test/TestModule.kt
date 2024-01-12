@@ -2,12 +2,15 @@ package com.beatrice.quicktock.di.test
 
 import com.beatrice.quicktock.data.repository.TimerRepository
 import com.beatrice.quicktock.data.repository.fake.FakeTimerRepository
+import com.beatrice.quicktock.di.createStateMachine
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import org.koin.dsl.module
 
 val testStateMachineModule =
     module {
-        single { createTestStateMachine(UiState.CountingDown(10)) }
+        single { createStateMachine().with {
+            initialState(UiState.CountingDown(10))
+        } }
     }
 val testRepositoryModule =
     module {
