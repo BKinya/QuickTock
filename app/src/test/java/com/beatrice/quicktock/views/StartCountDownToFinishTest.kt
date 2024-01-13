@@ -19,15 +19,6 @@ const val TEST_DURATION = 10
 const val TIME_LEFT_ONE = 7
 const val TIME_LEFT_TWO = 1
 
-/**
- * Observation ... verification start when the app reaches the end state.
- * Intermediate states are skipped
- * so
- * Either test the states separately... This looks like it mighty give me want I want
- * But I have to override initial state for the state machine verytime
- * Not sure how I''ll test counting down to paused I can
- * but not counting down to finished... maybe I could
- */
 // TODO: Rename this class and file
 @RunWith(RobolectricTestRunner::class)
 class StartCountDownTimerTest {
