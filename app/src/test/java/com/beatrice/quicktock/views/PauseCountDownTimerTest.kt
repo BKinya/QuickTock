@@ -51,7 +51,7 @@ class PauseCountDownTimerTest {
         /**
          * Send [onResume] event to state machine
          */
-        sendUiEvent(composeTestRule){
+        sendUiEvent(composeTestRule) {
             composeTestRule.activity.timerViewModel.onResumeCountingDown(TEST_DURATION)
         } verify {
             timerDurationTextIsPresent()
@@ -60,5 +60,4 @@ class PauseCountDownTimerTest {
             resumeButtonIsNotPresent()
         }
     }
-
 }
