@@ -2,22 +2,16 @@ package com.beatrice.quicktock.views
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.beatrice.quicktock.MainActivity
-import com.beatrice.quicktock.TestApplication
-import com.beatrice.quicktock.di.appModule
-import com.beatrice.quicktock.ui.stateMachine.UiState
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
 
 @RunWith(RobolectricTestRunner::class)
-@Config(application = TestApplication::class)
 class PauseCountDownTimerTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -25,11 +19,14 @@ class PauseCountDownTimerTest {
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        composeTestRule.activity.timerViewModel.updateUiState(UiState.CountingDown(TEST_DURATION))
         ShadowLog.stream = System.out // Redirect Logcat to console
-        stopKoin()
-        startKoin {
-            modules(appModule)
+
+        /**
+         * Fast-forward the state of state machine to [CountingDown]
+         */
+        with(composeTestRule.activity.timerViewModel) {
+            onStartCountDown(TEST_DURATION)
+            onContinueCountingDown(TEST_DURATION)
         }
     }
 
@@ -39,18 +36,29 @@ class PauseCountDownTimerTest {
     }
 
     @Test
-    fun `when you click pause button the app moved to PAUSED state`() {
+    fun `test transition from COUNTING_DOWN state to PAUSED state and then back to COUNTING_DOWN state `() {
         launchTimerScreen(composeTestRule) {
-            TimerDurationTextIsPresent()
+            timerDurationTextIsPresent()
             stopButtonIsPresent()
             pauseButtonIsPresentAndClick()
         } verify {
-            TimerDurationTextIsPresent()
+            timerDurationTextIsPresent()
             pauseButtonNotPresent()
             stopButtonIsPresent()
             resumeButtonIsPresent()
         }
+
+        /**
+         * Send [onResume] event to state machine
+         */
+        sendUiEvent(composeTestRule){
+            composeTestRule.activity.timerViewModel.onResumeCountingDown(TEST_DURATION)
+        } verify {
+            timerDurationTextIsPresent()
+            pauseButtonPresent()
+            stopButtonIsPresent()
+            resumeButtonIsNotPresent()
+        }
     }
-    // TODO: STOP button test here
-    // renaming the class
+
 }

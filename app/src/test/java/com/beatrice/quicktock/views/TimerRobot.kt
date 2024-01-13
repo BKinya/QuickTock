@@ -2,7 +2,6 @@ package com.beatrice.quicktock.views
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -31,7 +30,7 @@ fun sendUiEvent(
 class TimerRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
-    fun TimerDurationTextIsPresent() {
+    fun timerDurationTextIsPresent() {
         val duration = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
         composeTestRule.onNodeWithText(duration).assertIsDisplayed()
     }
@@ -65,7 +64,7 @@ class TimerRobot(
 class StateTransitionVerification(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
-    fun TimerDurationTextIsPresent() {
+    fun timerDurationTextIsPresent() {
         val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
@@ -108,5 +107,10 @@ class StateTransitionVerification(
     fun stopButtonNotPresent() {
         val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
         composeTestRule.onNodeWithContentDescription(stopBtnDesc).assertDoesNotExist()
+    }
+
+    fun resumeButtonIsNotPresent() {
+        val resumeBtnDesc = composeTestRule.activity.getString(R.string.resumeButtonDesc)
+        composeTestRule.onNodeWithContentDescription(resumeBtnDesc).assertDoesNotExist()
     }
 }
