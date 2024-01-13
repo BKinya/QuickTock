@@ -13,11 +13,12 @@ fun TimerScreen(
     modifier: Modifier = Modifier,
     onPlayButtonClicked: (Int) -> Unit,
     onPauseButtonClicked: (Int) -> Unit,
-    onResumeButtonClicked: (Int)-> Unit
+    onResumeButtonClicked: (Int) -> Unit
 ) {
     Scaffold(
         modifier = modifier
     ) { _ ->
+        println("state => $uiState")
 
         when (uiState) {
             is UiState.Idle -> {
@@ -30,6 +31,8 @@ fun TimerScreen(
             }
 
             is UiState.CountingDown -> {
+                println("state => counting down for reaallll")
+
                 CountDownTimer(
                     onPauseButtonClicked = onPauseButtonClicked,
                     duration = uiState.timeLeft,

@@ -44,7 +44,7 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
             }
         }
         state<UiState.Paused> {
-            on<UiEvent.OnResume> {event ->
+            on<UiEvent.OnResume> { event ->
                 transitionTo(UiState.CountingDown(event.timeLeft), SideEffect.DoCountDown(event.timeLeft))
             }
 

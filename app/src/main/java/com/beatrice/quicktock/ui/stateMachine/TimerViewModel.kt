@@ -34,6 +34,7 @@ class TimerViewModel(
 
     fun onStartCountDown(duration: Int) {
         viewModelScope.launch(dispatcher) {
+            println("Getting Started VM")
             val transition =
                 stateMachine.transition(UiEvent.OnStart(duration))
             transitionSharedFlow.emit(transition)
@@ -42,6 +43,7 @@ class TimerViewModel(
 
     fun onContinueCountingDown(timeLeft: Int) {
         viewModelScope.launch(dispatcher) {
+            println("continue countdown")
             val transition = stateMachine.transition(UiEvent.OnContinueCountDown(timeLeft))
             transitionSharedFlow.emit(transition)
         }
@@ -71,20 +73,22 @@ class TimerViewModel(
         }
     }
 
-    fun onResumeCountingDown(timeLeft: Int){
+    fun onResumeCountingDown(timeLeft: Int) {
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnResume(timeLeft))
             transitionSharedFlow.emit(transition)
         }
     }
 
-    fun observeTransitions() {
+    private fun observeTransitions() {
         viewModelScope.launch(dispatcher) {
             transitionSharedFlow.asSharedFlow().collectLatest { transition ->
+                println("transition => $transition")
                 if (transition is StateMachine.Transition.Valid) {
                     _uiState.value = transition.toState
                     when (val sideEffect = transition.sideEffect) {
                         is SideEffect.DoCountDown -> {
+                            println("sideeffect => doCountDown")
                             countDown(sideEffect.duration)
                         }
 
@@ -98,11 +102,13 @@ class TimerViewModel(
     private fun countDown(duration: Int) {
         countDownJob =
             viewModelScope.launch(dispatcher) {
+                println("repository method call")
                 timerRepository.doCountDown(duration)
                     .onCompletion {
                         onFinishCountingDown()
                     }
                     .collectLatest { timeLeft ->
+                        println("collecting result")
                         onContinueCountingDown(timeLeft)
                     }
             }

@@ -34,9 +34,9 @@ class ResumeCountDownViewModelTest {
         )
 
     @Test
-    fun `update value of uiState to Resumed state when the StateMachine transitions to Resume state`()= runTest {
+    fun `update value of uiState to Resumed state when the StateMachine transitions to Resume state`() = runTest {
         viewModel.uiState.test {
-            assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem())// verify initial value
+            assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem()) // verify initial value
             viewModel.onResumeCountingDown(TEST_DURATION)
             assertEquals(UiState.CountingDown(TEST_DURATION), awaitItem())
             assertEquals(UiState.CountingDown(TIME_LEFT_ONE), awaitItem())

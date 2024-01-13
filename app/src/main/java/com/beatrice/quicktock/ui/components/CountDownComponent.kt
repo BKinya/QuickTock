@@ -38,6 +38,7 @@ fun CountDownTimer(
     showStopButton: Boolean = false,
     showResumeButton: Boolean = false
 ) {
+    println("isPause => $showPauseButton")
     Column(
         modifier =
         modifier

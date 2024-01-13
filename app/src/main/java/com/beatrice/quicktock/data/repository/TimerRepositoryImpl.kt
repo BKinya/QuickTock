@@ -9,7 +9,7 @@ class TimerRepositoryImpl(
     private val dataStore: TimerDataStore
 ) : TimerRepository {
     override fun doCountDown(duration: Int): Flow<Int> = flow {
-        for (i in duration   downTo 0 step 1) {
+        for (i in duration downTo 0 step 1) {
             delay(1000)
             emit(i)
         }

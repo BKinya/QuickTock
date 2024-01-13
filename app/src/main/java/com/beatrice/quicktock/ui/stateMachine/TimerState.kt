@@ -35,7 +35,5 @@ sealed interface SideEffect {
 
     data object Restarting : SideEffect
 
-
-
     data object Reset : SideEffect
 }

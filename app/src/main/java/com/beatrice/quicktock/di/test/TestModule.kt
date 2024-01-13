@@ -8,9 +8,11 @@ import org.koin.dsl.module
 
 val testStateMachineModule =
     module {
-        single { createStateMachine().with {
-            initialState(UiState.CountingDown(10))
-        } }
+        single {
+            createStateMachine().with {
+                initialState(UiState.CountingDown(10))
+            }
+        }
     }
 val testRepositoryModule =
     module {
@@ -19,4 +21,4 @@ val testRepositoryModule =
         }
     }
 
-val testModule = listOf(testRepositoryModule, testStateMachineModule)
+val testModule = listOf(testRepositoryModule)
