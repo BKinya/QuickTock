@@ -113,8 +113,4 @@ class TimerViewModel(
                     }
             }
     }
-
-    fun updateUiState(uiState: UiState) {
-        _uiState.value = uiState
-    }
 }
