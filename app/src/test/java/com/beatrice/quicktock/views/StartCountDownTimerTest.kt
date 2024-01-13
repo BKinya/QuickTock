@@ -6,14 +6,12 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import com.beatrice.quicktock.MainActivity
 import com.beatrice.quicktock.R
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
 
@@ -30,7 +28,7 @@ const val TIME_LEFT_TWO = 1
  * Not sure how I''ll test counting down to paused I can
  * but not counting down to finished... maybe I could
  */
-@OptIn(ExperimentalTestApi::class)
+// TODO: Rename this class and file
 @RunWith(RobolectricTestRunner::class)
 class StartCountDownTimerTest {
     @get:Rule
@@ -42,49 +40,40 @@ class StartCountDownTimerTest {
         ShadowLog.stream = System.out // Redirect Logcat to console
     }
 
-    fun tearDown() {
-        stopKoin()
-    }
-
     @Test
     fun `test transition from TIMER_SET state to COUNTING_DOWN_STARTED state to COUNTING_DOWN state to FINISHED state`() {
-        // 1 TimerSet state
-        val duration = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
-        composeTestRule.onNodeWithText(duration).assertIsDisplayed()
+        launchTimerScreen(composeTestRule){
+            TimerDurationTextIsPresent()
+            playButtonIsPresentAndClick()
 
-        val playButtonDesc = composeTestRule.activity.getString(R.string.playBtnDesc)
-        composeTestRule.onNodeWithContentDescription(playButtonDesc)
-            .assertIsDisplayed()
-            .performClick()
+        } verify {
+            TimerDurationTextIsPresent()
+            playButtonNotPresent()
+        }
 
-        // 2 CountingDownStarted state
-        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
-        composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
+        /**
+         * Send [onContinueCountingDown] event to state machine
+         */
+        sendUiEvent(composeTestRule){
+            composeTestRule.activity.timerViewModel.onContinueCountingDown(TEST_DURATION)
+        }verify {
+            waitForTimeLeftTextToUpdate()
+            pauseButtonPresent()
+            stopButtonIsPresent()
+            playButtonNotPresent()
+        }
 
-        composeTestRule.onNodeWithContentDescription(playButtonDesc).assertDoesNotExist()
+        /**
+         * Send [onFinish] event to state machine
+         */
 
-        // 3 send onContinueCountingDown event to state machine
-        composeTestRule.activity.timerViewModel.onContinueCountingDown(TEST_DURATION)
-
-        // 4 CountingDown state
-        val timeLeft2 = composeTestRule.activity.getString(R.string.durationLabel, 9)
-        composeTestRule.waitUntilExactlyOneExists(hasText(timeLeft2), timeoutMillis = 3000)
-
-        composeTestRule.onNodeWithText(timeLeft2).assertIsDisplayed()
-        val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
-        composeTestRule.onNodeWithContentDescription(pauseBtnDesc).assertIsDisplayed()
-        val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
-        composeTestRule.onNodeWithContentDescription(stopBtnDesc).assertIsDisplayed()
-
-        // 5 send onFinish event to the state machine
-        composeTestRule.activity.timerViewModel.onFinishCountingDown()
-
-        // 6 Finished state
-        composeTestRule.waitUntilExactlyOneExists(hasText("Finished"))
-        composeTestRule.onNodeWithContentDescription(pauseBtnDesc).assertDoesNotExist()
-        composeTestRule.onNodeWithText(timeLeft2).assertDoesNotExist()
-        composeTestRule.onNodeWithContentDescription(stopBtnDesc).assertDoesNotExist()
-        composeTestRule.onNodeWithText("Finished").assertIsDisplayed()
+        sendUiEvent(composeTestRule){
+            composeTestRule.activity.timerViewModel.onFinishCountingDown()
+        }verify {
+            waitUntilFinishTextIsDispalyed()
+            pauseButtonNotPresent()
+            stopButtonNotPresent()
+        }
     }
 
     // TODO 2:

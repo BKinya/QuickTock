@@ -6,4 +6,5 @@
     <string name="resumeButtonDesc">Resume Button</string>
     <string name="durationLabel">%s seconds</string>
     <string name="durationTag">duration tag</string>
+    <string name="finished">Finished</string>
 </resources>

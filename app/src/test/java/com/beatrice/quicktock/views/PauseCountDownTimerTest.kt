@@ -41,11 +41,11 @@ class PauseCountDownTimerTest {
     @Test
     fun `when you click pause button the app moved to PAUSED state`() {
         launchTimerScreen(composeTestRule) {
-            durationTextIsPresent()
+            TimerDurationTextIsPresent()
             stopButtonIsPresent()
             pauseButtonIsPresentAndClick()
         } verify {
-            countingDownScreenIsPresent()
+            TimerDurationTextIsPresent()
             pauseButtonNotPresent()
             stopButtonIsPresent()
             resumeButtonIsPresent()

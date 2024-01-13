@@ -1,6 +1,9 @@
 package com.beatrice.quicktock.views
 
+import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -18,10 +21,17 @@ fun launchTimerScreen(
     ).apply(block)
 }
 
+fun sendUiEvent(
+    composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
+    block: TimerRobot.() -> Unit
+): TimerRobot {
+    return TimerRobot(composeTestRule).apply(block)
+}
+
 class TimerRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
-    fun durationTextIsPresent() {
+    fun TimerDurationTextIsPresent() {
         val duration = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
         composeTestRule.onNodeWithText(duration).assertIsDisplayed()
     }
@@ -51,10 +61,11 @@ class TimerRobot(
     }
 }
 
+@OptIn(ExperimentalTestApi::class)
 class StateTransitionVerification(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
-    fun countingDownScreenIsPresent() {
+    fun TimerDurationTextIsPresent() {
         val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
@@ -82,5 +93,20 @@ class StateTransitionVerification(
     fun resumeButtonIsPresent() {
         val resumeBtnDesc = composeTestRule.activity.getString(R.string.resumeButtonDesc)
         composeTestRule.onNodeWithContentDescription(resumeBtnDesc).assertIsDisplayed()
+    }
+
+    fun waitForTimeLeftTextToUpdate() {
+        val timeLeft2 = composeTestRule.activity.getString(R.string.durationLabel, 9)
+        composeTestRule.waitUntilExactlyOneExists(hasText(timeLeft2), timeoutMillis = 3000)
+    }
+
+    fun waitUntilFinishTextIsDispalyed() {
+        val finishedText = composeTestRule.activity.getString(R.string.finished)
+        composeTestRule.waitUntilExactlyOneExists(hasText(finishedText))
+    }
+
+    fun stopButtonNotPresent() {
+        val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
+        composeTestRule.onNodeWithContentDescription(stopBtnDesc).assertDoesNotExist()
     }
 }
