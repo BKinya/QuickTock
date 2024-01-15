@@ -7,9 +7,18 @@ import com.tinder.StateMachine
 
 fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
     return StateMachine.create {
-        initialState(UiState.TimerSet(60))
+        initialState(UiState.Idle)
 
-        state<UiState.Idle> {} // Not sure if I'll need this state or maybe rename it to starting or initial or sth like that
+        state<UiState.Idle> {
+            on<UiEvent.OnTimerSet> { event ->
+                transitionTo(UiState.TimerSet(event.duration))
+            }
+            on<UiEvent.OnSetTimer> {
+                transitionTo(UiState.SettingTimer)
+            }
+        }
+
+        state<UiState.SettingTimer> {  }
 
         state<UiState.TimerSet> {
             on<UiEvent.OnStart> { event ->

@@ -2,6 +2,7 @@ package com.beatrice.quicktock.ui.stateMachine
 
 sealed interface UiState {
     data object Idle : UiState
+    data object SettingTimer: UiState
 
     @JvmInline value class TimerSet(val duration: Int) : UiState
 
@@ -15,6 +16,10 @@ sealed interface UiState {
 }
 
 sealed interface UiEvent {
+
+    @JvmInline value class OnTimerSet(val duration: Int): UiEvent
+
+    data object  OnSetTimer: UiEvent
     @JvmInline value class OnStart(val duration: Int) : UiEvent
 
     @JvmInline value class OnContinueCountDown(val timeLeft: Int) : UiEvent
@@ -31,6 +36,8 @@ sealed interface UiEvent {
 }
 
 sealed interface SideEffect {
+    data object CheckTimer: SideEffect
+    @JvmInline value class SetTimer(val duration: Int): SideEffect
     @JvmInline value class DoCountDown(val duration: Int) : SideEffect
 
     data object Restarting : SideEffect
