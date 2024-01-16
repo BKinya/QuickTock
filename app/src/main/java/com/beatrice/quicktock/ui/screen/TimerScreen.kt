@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.beatrice.quicktock.ui.components.CountDownTimerComponent
+import com.beatrice.quicktock.ui.components.SetTimerComponent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 
 /**
@@ -38,7 +39,7 @@ fun TimerScreen(
                 onStart()
             }
             is UiState.SettingTimer -> {
-                Text("Timer Set")
+                SetTimerComponent()
             }
 
 

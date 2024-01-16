@@ -34,17 +34,22 @@ class SetTimerTest {
 
     @Test
     fun `when state is SettingTimer show ui to set the timer`() {
-        // will checking the state automatically happen.. we'll see
+        // TODO: Rename
         launchTimerScreen(composeTestRule) {
             setTimerTitleIsDisplayed()
             durationInputIsDisplayed()
             saveButtonIsDisplayed()
-            // enter text
             enterDuration()
-            // click button
             clickSaveButton()
-            // move to the next state
         }verify {
+            // we mighty have to wait... but this has not been implemented yet
+            timerDurationTextIsPresent()
+            playButtonIsDisplayed()
+            // When you click the button the expectation is
+            /**
+             * Duration is saved successfully
+             * the UI goes to TimerSet state
+             */
 
 
         }

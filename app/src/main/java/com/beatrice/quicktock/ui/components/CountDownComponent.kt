@@ -46,15 +46,7 @@ fun CountDownTimerComponent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(72.dp))
-        Text(
-            text = stringResource(id = R.string.durationLabel, duration),
-            style =
-            TextStyle(
-                fontFamily = FontFamily.Serif,
-                fontSize = 27.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        )
+       TitleComponent(title = stringResource(id = R.string.durationLabel, duration))
         Spacer(modifier = Modifier.height(36.dp))
         Row {
             ActionButton(

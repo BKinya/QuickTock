@@ -64,4 +64,9 @@ class Verification(
         val resumeBtnDesc = composeTestRule.activity.getString(R.string.resumeButtonDesc)
         composeTestRule.onNodeWithContentDescription(resumeBtnDesc).assertDoesNotExist()
     }
+
+    fun playButtonIsDisplayed() {
+        val playButtonDesc = composeTestRule.activity.getString(R.string.playBtnDesc)
+        composeTestRule.onNodeWithContentDescription(playButtonDesc).assertIsDisplayed()
+    }
 }

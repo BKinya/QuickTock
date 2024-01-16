@@ -9,4 +9,5 @@
     <string name="finished">Finished</string>
     <string name="setTimerTitle">Set Timer</string>
     <string name="saveLabel">Save</string>
+    <string name="secondsLabel">Seconds</string>
 </resources>
