@@ -27,15 +27,16 @@ class TimerDataStoreImpl(
         }
     }
 
-    override fun setTimer(duration: Int): Flow<Boolean>  = flow{
+    override fun saveTimer(duration: Int): Flow<Int>  = flow{
         try {
-            userPreferences.edit { pref ->
+         val result = userPreferences.edit { pref ->
                 pref[TIMER_KEY] = duration
             }
-            emit(true)
+
+            emit(result[TIMER_KEY]?:0)
         } catch (e: Exception) {
             Log.d("EXCEPTION", "Setting timer => ${e.message}")
-           emit(false)
+           emit(0)
         }
     }
 }

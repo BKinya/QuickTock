@@ -98,6 +98,9 @@ class TimerViewModel(
                         is SideEffect.CheckTimer -> {
                             checkTimer()
                         }
+                        is SideEffect.SaveTimer -> {
+                            saveTimer(sideEffect.duration)
+                        }
 
                         else -> {}
                     }
@@ -120,6 +123,20 @@ class TimerViewModel(
         }
     }
 
+    private fun saveTimer(duration: Int){
+        viewModelScope.launch(dispatcher) {
+            timerRepository.saveTimer(duration).collectLatest {duration ->
+                if (duration > 0){
+                    onTimerSet(duration)
+
+                }else{
+                    onSetTimer() // Better error reporting
+                }
+
+            }
+        }
+    }
+
      fun onTimerSet(duration: Int) {
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnTimerSet(duration))
@@ -130,6 +147,13 @@ class TimerViewModel(
     fun onSetTimer() {
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnSetTimer)
+            transitionSharedFlow.emit(transition)
+        }
+    }
+
+    fun onSaveTimer(duration: Int){
+        viewModelScope.launch(dispatcher) {
+            val transition = stateMachine.transition(UiEvent.OnSaveTimer(duration))
             transitionSharedFlow.emit(transition)
         }
     }

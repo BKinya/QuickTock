@@ -61,7 +61,8 @@ class TimerRobot(
     }
 
     fun enterDuration() {
-        composeTestRule.onNodeWithText("0.0").performTextInput("10")
+        val durationTag = composeTestRule.activity.getString(R.string.durationTag)
+        composeTestRule.onNodeWithTag(durationTag).performTextInput("10")
     }
 
     fun clickSaveButton() {

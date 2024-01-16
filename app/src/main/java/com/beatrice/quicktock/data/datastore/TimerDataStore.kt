@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface TimerDataStore {
     fun getTimer(): Flow<Int>
 
-    fun setTimer(duration: Int): Flow<Boolean>
+    fun saveTimer(duration: Int): Flow<Int>
 }

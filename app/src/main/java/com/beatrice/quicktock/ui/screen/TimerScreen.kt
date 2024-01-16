@@ -26,7 +26,8 @@ fun TimerScreen(
     onStart: () -> Unit,
     onPlayButtonClicked: (Int) -> Unit,
     onPauseButtonClicked: (Int) -> Unit,
-    onResumeButtonClicked: (Int) -> Unit
+    onResumeButtonClicked: (Int) -> Unit,
+    onSaveTimerBtnClicked: (Int) -> Unit
 ) {
     Scaffold(
         modifier = modifier
@@ -39,7 +40,9 @@ fun TimerScreen(
                 onStart()
             }
             is UiState.SettingTimer -> {
-                SetTimerComponent()
+                SetTimerComponent(
+                    onSaveTimerBtnClicked = onSaveTimerBtnClicked
+                )
             }
 
 

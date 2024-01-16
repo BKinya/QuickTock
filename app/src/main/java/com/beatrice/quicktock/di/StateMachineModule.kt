@@ -24,6 +24,9 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
         }
 
         state<UiState.SettingTimer> {
+            on<UiEvent.OnSaveTimer> { event ->
+                dontTransition(SideEffect.SaveTimer(event.duration))
+            }
             on<UiEvent.OnTimerSet> { event ->
                 transitionTo(UiState.TimerSet(event.duration))
             }

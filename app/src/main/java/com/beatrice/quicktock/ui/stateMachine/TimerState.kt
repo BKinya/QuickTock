@@ -27,9 +27,12 @@ sealed interface UiState {
 sealed interface UiEvent {
 
     data object OnStart: UiEvent
+    data object  OnSetTimer: UiEvent
+
+    @JvmInline value class OnSaveTimer(val duration: Int): UiEvent
+
     @JvmInline value class OnTimerSet(val duration: Int): UiEvent
 
-    data object  OnSetTimer: UiEvent
     @JvmInline value class OnStartCountDown(val duration: Int) : UiEvent
 
     @JvmInline value class OnContinueCountDown(val timeLeft: Int) : UiEvent
@@ -47,7 +50,7 @@ sealed interface UiEvent {
 
 sealed interface SideEffect {
     data object CheckTimer: SideEffect
-    @JvmInline value class SetTimer(val duration: Int): SideEffect
+    @JvmInline value class SaveTimer(val duration: Int): SideEffect
     @JvmInline value class DoCountDown(val duration: Int) : SideEffect
 
     data object Restarting : SideEffect

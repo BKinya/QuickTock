@@ -15,7 +15,7 @@ class TimerRepositoryImpl(
         }
     }
 
-    override suspend fun setTimer(duration: Int): Flow<Boolean> = dataStore.setTimer(duration)
+    override suspend fun saveTimer(duration: Int): Flow<Int> = dataStore.saveTimer(duration)
 
     override suspend fun getTimer(): Flow<Int> = dataStore.getTimer()
 }
