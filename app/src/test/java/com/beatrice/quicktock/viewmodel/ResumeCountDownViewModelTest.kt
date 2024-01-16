@@ -1,7 +1,7 @@
 package com.beatrice.quicktock.viewmodel
 
 import app.cash.turbine.test
-import com.beatrice.quicktock.data.repository.fake.FakeTimerRepository
+import com.beatrice.quicktock.data.fake.FakeTimerRepository
 import com.beatrice.quicktock.di.createStateMachine
 import com.beatrice.quicktock.ui.stateMachine.SideEffect
 import com.beatrice.quicktock.ui.stateMachine.TimerViewModel

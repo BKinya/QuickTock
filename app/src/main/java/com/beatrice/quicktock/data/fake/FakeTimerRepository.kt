@@ -1,4 +1,4 @@
-package com.beatrice.quicktock.data.repository.fake
+package com.beatrice.quicktock.data.fake
 
 import com.beatrice.quicktock.data.repository.TimerRepository
 import kotlinx.coroutines.flow.Flow

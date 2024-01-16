@@ -2,11 +2,13 @@ package com.beatrice.quicktock.views
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.beatrice.quicktock.MainActivity
+import com.beatrice.quicktock.TestApplication
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
 
 const val TEST_DURATION = 10
@@ -14,6 +16,7 @@ const val TIME_LEFT_ONE = 7
 const val TIME_LEFT_TWO = 1
 
 @RunWith(RobolectricTestRunner::class)
+@Config(application = TestApplication::class)
 class StartCountDownTimerTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()

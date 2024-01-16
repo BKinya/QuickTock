@@ -1,6 +1,6 @@
 package com.beatrice.quicktock.util
 
-import com.beatrice.quicktock.data.repository.fake.FakeTimerRepository
+import com.beatrice.quicktock.data.fake.FakeTimerRepository
 import com.beatrice.quicktock.di.createStateMachine
 import com.beatrice.quicktock.ui.stateMachine.SideEffect
 import com.beatrice.quicktock.ui.stateMachine.TimerViewModel
