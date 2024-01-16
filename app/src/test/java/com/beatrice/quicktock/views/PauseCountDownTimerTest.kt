@@ -3,6 +3,8 @@ package com.beatrice.quicktock.views
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.beatrice.quicktock.MainActivity
 import com.beatrice.quicktock.TestApplication
+import com.beatrice.quicktock.views.util.launchTimerScreen
+import com.beatrice.quicktock.views.util.sendUiEvent
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
