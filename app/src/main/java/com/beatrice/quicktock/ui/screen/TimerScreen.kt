@@ -4,7 +4,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.beatrice.quicktock.ui.components.CountDownTimer
+import com.beatrice.quicktock.ui.components.CountDownTimerComponent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 
 /**
@@ -38,12 +38,12 @@ fun TimerScreen(
                 onStart()
             }
             is UiState.SettingTimer -> {
-
+                Text("Timer Set")
             }
 
 
             is UiState.TimerSet -> {
-                CountDownTimer(
+                CountDownTimerComponent(
                     onPlayButtonClicked = onPlayButtonClicked,
                     duration = uiState.duration,
                     showPlayButton = true
@@ -51,7 +51,7 @@ fun TimerScreen(
             }
 
             is UiState.CountDownStarted -> { // todo do some playful animation
-                CountDownTimer(
+                CountDownTimerComponent(
                     duration = uiState.duration
                 )
             }
@@ -59,7 +59,7 @@ fun TimerScreen(
             is UiState.CountingDown -> {
                 println("state => counting down for reaallll")
 
-                CountDownTimer(
+                CountDownTimerComponent(
                     onPauseButtonClicked = onPauseButtonClicked,
                     duration = uiState.timeLeft,
                     showPauseButton = true,
@@ -68,7 +68,7 @@ fun TimerScreen(
             }
 
             is UiState.Paused -> {
-                CountDownTimer(
+                CountDownTimerComponent(
                     duration = uiState.timeLeft,
                     showStopButton = true,
                     showResumeButton = true,

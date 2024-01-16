@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.beatrice.quicktock.R
 
 @Composable
-fun CountDownTimer(
+fun CountDownTimerComponent(
     duration: Int,
     modifier: Modifier = Modifier,
     onPlayButtonClicked: (Int) -> Unit = {},
@@ -38,7 +38,6 @@ fun CountDownTimer(
     showStopButton: Boolean = false,
     showResumeButton: Boolean = false
 ) {
-    println("isPause => $showPauseButton")
     Column(
         modifier =
         modifier

@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.beatrice.quicktock.MainActivity
 import com.beatrice.quicktock.R
@@ -40,5 +41,29 @@ class TimerRobot(
         composeTestRule.onNodeWithContentDescription(pauseBtnDesc)
             .assertIsDisplayed()
             .performClick()
+    }
+
+    fun setTimerTitleIsDisplayed() {
+        val setTimerTitle = composeTestRule.activity.getString(R.string.setTimerTitle)
+        composeTestRule.onNodeWithText(setTimerTitle).assertIsDisplayed()
+    }
+
+    fun durationInputIsDisplayed() {
+        composeTestRule.onNodeWithText("0.0"). assertIsDisplayed()
+    }
+
+
+    fun saveButtonIsDisplayed() {
+        val saveLabel = composeTestRule.activity.getString(R.string.saveLabel)
+        composeTestRule.onNodeWithText(saveLabel).assertIsDisplayed()
+    }
+
+    fun enterDuration() {
+        composeTestRule.onNodeWithText("0.0").performTextInput("10")
+    }
+
+    fun clickSaveButton() {
+        val saveLabel = composeTestRule.activity.getString(R.string.saveLabel)
+        composeTestRule.onNodeWithText(saveLabel).performClick()
     }
 }

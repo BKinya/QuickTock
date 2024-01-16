@@ -7,4 +7,6 @@
     <string name="durationLabel">%s seconds</string>
     <string name="durationTag">duration tag</string>
     <string name="finished">Finished</string>
+    <string name="setTimerTitle">Set Timer</string>
+    <string name="saveLabel">Save</string>
 </resources>

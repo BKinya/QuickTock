@@ -58,7 +58,8 @@ class PauseCountDownTimerTest {
          * Send [onResume] event to state machine
          */
         sendUiEvent(composeTestRule) {
-            composeTestRule.activity.timerViewModel.onResumeCountingDown(TEST_DURATION)
+            composeTestRule.activity.timerViewModel.onResumeCountingDown(TEST_DURATION)// What about replacing this with a button click.
+            // This sounds more efficient TODO
         } verify {
             timerDurationTextIsPresent()
             pauseButtonPresent()
