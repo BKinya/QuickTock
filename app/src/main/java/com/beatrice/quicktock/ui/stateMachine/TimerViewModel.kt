@@ -121,10 +121,17 @@ class TimerViewModel(
     }
 
     private fun onTimerSet(duration: Int) {
-
+        viewModelScope.launch(dispatcher) {
+            val transition = stateMachine.transition(UiEvent.OnTimerSet(duration))
+            transitionSharedFlow.emit(transition)
+        }
     }
 
     private fun onSetTimer() {
+        viewModelScope.launch(dispatcher) {
+            val transition = stateMachine.transition(UiEvent.OnSetTimer)
+            transitionSharedFlow.emit(transition)
+        }
     }
 
     private fun countDown(duration: Int) {

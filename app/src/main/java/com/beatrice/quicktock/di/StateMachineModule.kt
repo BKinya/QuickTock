@@ -13,6 +13,14 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
             on<UiEvent.OnStart> {
                 dontTransition(SideEffect.CheckTimer)
             }
+
+            on<UiEvent.OnTimerSet> {event ->
+                transitionTo(UiState.TimerSet(event.duration))
+            }
+
+            on<UiEvent.OnSetTimer> {
+                transitionTo(UiState.SettingTimer)
+            }
         }
 
         state<UiState.SettingTimer> {  }
