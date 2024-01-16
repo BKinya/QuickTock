@@ -5,6 +5,7 @@ import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.emptyPreferences
 import com.beatrice.quicktock.data.datastore.TimerDataStore
+import com.beatrice.quicktock.data.datastore.TimerDataStoreImpl
 import com.beatrice.quicktock.data.repository.TimerRepository
 import com.beatrice.quicktock.data.repository.TimerRepositoryImpl
 import com.beatrice.quicktock.ui.stateMachine.TimerViewModel
@@ -28,8 +29,8 @@ val dataModule =
                 produceFile = { androidContext().dataStoreFile("user_preferences.preferences_pb") }
             )
         }
-        single {
-            TimerDataStore(
+        single<TimerDataStore> {
+            TimerDataStoreImpl(
                 userPreferences = get()
             )
         }
