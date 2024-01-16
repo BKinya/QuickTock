@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     TimerScreen(
                         uiState = state,
+                        onStart = timerViewModel::onLaunchTheApp,
                         onPlayButtonClicked = timerViewModel::onStartCountDown,
                         onPauseButtonClicked = timerViewModel::onPauseCountingDown,
                         onResumeButtonClicked = timerViewModel::onResumeCountingDown

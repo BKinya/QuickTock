@@ -1,7 +1,16 @@
 package com.beatrice.quicktock.ui.stateMachine
 
+/**
+ * I'll first read  and write the value from datastore
+ * Then Implement setting timer functionality and make sure I could count down till the end
+ * Then I'll try the configuration changes and process death shenanigans
+ * and see how it goes.
+ *
+ *
+ */
 sealed interface UiState {
     data object Idle : UiState
+
     data object SettingTimer: UiState
 
     @JvmInline value class TimerSet(val duration: Int) : UiState
@@ -17,10 +26,11 @@ sealed interface UiState {
 
 sealed interface UiEvent {
 
+    data object OnStart: UiEvent
     @JvmInline value class OnTimerSet(val duration: Int): UiEvent
 
     data object  OnSetTimer: UiEvent
-    @JvmInline value class OnStart(val duration: Int) : UiEvent
+    @JvmInline value class OnStartCountDown(val duration: Int) : UiEvent
 
     @JvmInline value class OnContinueCountDown(val timeLeft: Int) : UiEvent
 

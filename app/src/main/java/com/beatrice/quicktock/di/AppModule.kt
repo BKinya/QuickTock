@@ -25,7 +25,7 @@ val dataModule =
                     produceNewData = { emptyPreferences() }
                 ),
                 scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-                produceFile = { androidContext().dataStoreFile("user_preferences.pn") }
+                produceFile = { androidContext().dataStoreFile("user_preferences.preferences_pb") }
             )
         }
         single {

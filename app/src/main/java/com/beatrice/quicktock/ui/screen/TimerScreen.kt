@@ -11,6 +11,7 @@ import com.beatrice.quicktock.ui.stateMachine.UiState
 fun TimerScreen(
     uiState: UiState,
     modifier: Modifier = Modifier,
+    onStart: () -> Unit,
     onPlayButtonClicked: (Int) -> Unit,
     onPauseButtonClicked: (Int) -> Unit,
     onResumeButtonClicked: (Int) -> Unit
@@ -22,7 +23,12 @@ fun TimerScreen(
 
         when (uiState) {
             is UiState.Idle -> {
+                // TODO: Show some place holder screen..
+                // SPlash screen or something similar
+                onStart()
             }
+
+
 
             is UiState.CountDownStarted -> { // todo do some playful animation
                 CountDownTimer(

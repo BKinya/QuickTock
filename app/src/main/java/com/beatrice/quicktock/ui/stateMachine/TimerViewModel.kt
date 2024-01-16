@@ -1,8 +1,10 @@
 package com.beatrice.quicktock.ui.stateMachine
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beatrice.quicktock.data.repository.TimerRepository
+import com.beatrice.quicktock.di.vieModelModule
 import com.tinder.StateMachine
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
@@ -20,7 +22,7 @@ class TimerViewModel(
     private val stateMachine: StateMachine<UiState, UiEvent, SideEffect>,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.TimerSet(10))
+    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(stateMachine.state)
     val uiState = _uiState.asStateFlow()
 
     private val transitionSharedFlow =
@@ -32,10 +34,17 @@ class TimerViewModel(
         observeTransitions()
     }
 
+    fun onLaunchTheApp(){
+        viewModelScope.launch(dispatcher) {
+            val transition = stateMachine.transition(UiEvent.OnStart)
+            transitionSharedFlow.emit(transition)
+        }
+    }
+
     fun onStartCountDown(duration: Int) {
         viewModelScope.launch(dispatcher) {
             val transition =
-                stateMachine.transition(UiEvent.OnStart(duration))
+                stateMachine.transition(UiEvent.OnStartCountDown(duration))
             transitionSharedFlow.emit(transition)
         }
     }
@@ -79,6 +88,7 @@ class TimerViewModel(
     }
 
     private fun observeTransitions() {
+        Log.d("TIMER_VALUE ", "is getting started")
         viewModelScope.launch(dispatcher) {
             transitionSharedFlow.asSharedFlow().collectLatest { transition ->
                 if (transition is StateMachine.Transition.Valid) {
@@ -88,11 +98,37 @@ class TimerViewModel(
                             countDown(sideEffect.duration)
                         }
 
+                        is SideEffect.CheckTimer -> {
+                            Log.d("TIMER_VALUE ", "is got her")
+                            checkTimer()
+                        }
+
                         else -> {}
                     }
                 }
             }
         }
+    }
+
+    private fun checkTimer(){
+        viewModelScope.launch(dispatcher) {
+            timerRepository.getTimer().collectLatest {duration -> 
+                if (duration > 0){
+                    onTimerSet(duration)
+                    
+                }else{
+                    onSetTimer()
+                }
+               
+            }
+        }
+    }
+
+    private fun onTimerSet(duration: Int) {
+
+    }
+
+    private fun onSetTimer() {
     }
 
     private fun countDown(duration: Int) {
