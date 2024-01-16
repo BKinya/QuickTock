@@ -8,6 +8,7 @@ import com.beatrice.quicktock.ui.stateMachine.TimerViewModel
 import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.beatrice.quicktock.util.MainDispatcherExtension
+import com.beatrice.quicktock.util.createViewModel
 import com.beatrice.quicktock.views.TEST_DURATION
 import com.beatrice.quicktock.views.TIME_LEFT_ONE
 import com.beatrice.quicktock.views.TIME_LEFT_TWO
@@ -22,18 +23,8 @@ import org.junit.jupiter.api.extension.ExtendWith
 @OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(MainDispatcherExtension::class)
 class StartCountDownViewModelTest {
-    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> =
-        createStateMachine().with {
-            initialState(UiState.TimerSet(TEST_DURATION))
-        }
-    private val timerRepository = FakeTimerRepository()
 
-    private val viewModel =
-        TimerViewModel(
-            timerRepository = timerRepository,
-            stateMachine = stateMachine,
-            dispatcher = UnconfinedTestDispatcher()
-        )
+    private val viewModel = createViewModel(UiState.TimerSet(TEST_DURATION))
 
     @Test
     fun `update value of uiState to CountingDown when the StateMachine transitions to CountingDown state`() =

@@ -1,10 +1,8 @@
 package com.beatrice.quicktock.ui.stateMachine
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beatrice.quicktock.data.repository.TimerRepository
-import com.beatrice.quicktock.di.vieModelModule
 import com.tinder.StateMachine
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
@@ -88,7 +86,6 @@ class TimerViewModel(
     }
 
     private fun observeTransitions() {
-        Log.d("TIMER_VALUE ", "is getting started")
         viewModelScope.launch(dispatcher) {
             transitionSharedFlow.asSharedFlow().collectLatest { transition ->
                 if (transition is StateMachine.Transition.Valid) {
@@ -99,7 +96,6 @@ class TimerViewModel(
                         }
 
                         is SideEffect.CheckTimer -> {
-                            Log.d("TIMER_VALUE ", "is got her")
                             checkTimer()
                         }
 
