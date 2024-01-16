@@ -25,6 +25,7 @@ class PauseCountDownTimerTest {
          * Fast-forward the state of state machine to [CountingDown]
          */
         with(composeTestRule.activity.timerViewModel) {
+            onTimerSet(TEST_DURATION)
             onStartCountDown(TEST_DURATION)
             onContinueCountingDown(TEST_DURATION)
         }

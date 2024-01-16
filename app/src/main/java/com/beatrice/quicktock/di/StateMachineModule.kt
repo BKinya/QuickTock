@@ -23,7 +23,11 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
             }
         }
 
-        state<UiState.SettingTimer> {  }
+        state<UiState.SettingTimer> {
+            on<UiEvent.OnTimerSet> { event ->
+                transitionTo(UiState.TimerSet(event.duration))
+            }
+        }
 
         state<UiState.TimerSet> {
             on<UiEvent.OnStartCountDown> { event ->

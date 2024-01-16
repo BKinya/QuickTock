@@ -18,8 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MainDispatcherExtension::class)
 class CheckIfTimerIsSetViewModelTest {
-
-
     val stateMachine: StateMachine<UiState, UiEvent, SideEffect> =
         createStateMachine().with {
             initialState(UiState.Idle)

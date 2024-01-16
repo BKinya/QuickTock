@@ -7,6 +7,17 @@ import androidx.compose.ui.Modifier
 import com.beatrice.quicktock.ui.components.CountDownTimer
 import com.beatrice.quicktock.ui.stateMachine.UiState
 
+/**
+ * Add the resources part in the readme
+ *
+ * Update the current UI tests
+ * write and test setting timer screen
+ * ensure it works well with other features push it on github
+ *
+ *
+ *
+ */
+
 @Composable
 fun TimerScreen(
     uiState: UiState,
@@ -23,12 +34,21 @@ fun TimerScreen(
 
         when (uiState) {
             is UiState.Idle -> {
-                // TODO: Show some place holder screen..
-                // SPlash screen or something similar
+                // show splash screen or something similar
                 onStart()
+            }
+            is UiState.SettingTimer -> {
+
             }
 
 
+            is UiState.TimerSet -> {
+                CountDownTimer(
+                    onPlayButtonClicked = onPlayButtonClicked,
+                    duration = uiState.duration,
+                    showPlayButton = true
+                )
+            }
 
             is UiState.CountDownStarted -> { // todo do some playful animation
                 CountDownTimer(
@@ -60,13 +80,7 @@ fun TimerScreen(
                 // Show some fancy animations
                 Text("Finished")
             }
-            is UiState.TimerSet -> {
-                CountDownTimer(
-                    onPlayButtonClicked = onPlayButtonClicked,
-                    duration = uiState.duration,
-                    showPlayButton = true
-                )
-            }
+
             else -> {
             }
         }

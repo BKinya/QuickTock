@@ -22,6 +22,12 @@ class StartCountDownTimerTest {
     @Throws(Exception::class)
     fun setUp() {
         ShadowLog.stream = System.out // Redirect Logcat to console
+        /**
+         * Fast-forward the state of state machine to [TimerSet]
+         */
+        with(composeTestRule.activity.timerViewModel){
+            onTimerSet(TEST_DURATION)
+        }
     }
 
     @Test
