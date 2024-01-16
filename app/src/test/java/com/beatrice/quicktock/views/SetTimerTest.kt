@@ -18,12 +18,10 @@ class SetTimerTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-
     @After
     fun tearUp() {
         stopKoin()
     }
-
 
     @Test
     fun testSettingTimer() {
@@ -33,7 +31,7 @@ class SetTimerTest {
             saveButtonIsDisplayed()
             enterDuration()
             clickSaveButton()
-        }verify {
+        } verify {
             timerDurationTextIsPresent()
             playButtonIsDisplayed()
         }

@@ -16,21 +16,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.beatrice.quicktock.R
 
 @Composable
-
 fun DurationInputComponent(
     modifier: Modifier = Modifier,
     duration: String,
     onDurationChanged: (String) -> Unit = {}
-){
-    Row(modifier = modifier.fillMaxWidth(),
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center) {
+        horizontalArrangement = Arrangement.Center
+    ) {
         OutlinedTextField(
             value = duration,
             onValueChange = onDurationChanged,
@@ -40,15 +40,16 @@ fun DurationInputComponent(
             ).testTag(stringResource(R.string.durationTag)),
             textStyle = TextStyle(
                 textAlign = TextAlign.Center
-            ),
+            )
 
         )
         Spacer(modifier = Modifier.width(12.dp))
 
-        Text(stringResource(R.string.secondsLabel),
+        Text(
+            stringResource(R.string.secondsLabel),
             style = TextStyle(
                 fontFamily = FontFamily.Serif,
-                fontSize = 25.sp,
+                fontSize = 25.sp
             )
         )
     }

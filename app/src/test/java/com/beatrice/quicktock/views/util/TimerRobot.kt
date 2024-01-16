@@ -54,7 +54,6 @@ class TimerRobot(
         composeTestRule.onNodeWithTag(durationTag).assertIsDisplayed()
     }
 
-
     fun saveButtonIsDisplayed() {
         val saveLabel = composeTestRule.activity.getString(R.string.saveLabel)
         composeTestRule.onNodeWithText(saveLabel).assertIsDisplayed()

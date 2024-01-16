@@ -30,7 +30,7 @@ class StartCountDownTimerTest {
         /**
          * Fast-forward the state of state machine to [TimerSet]
          */
-        with(composeTestRule.activity.timerViewModel){
+        with(composeTestRule.activity.timerViewModel) {
             onTimerSet(TEST_DURATION)
         }
     }

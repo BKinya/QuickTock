@@ -32,23 +32,21 @@ class CheckIfTimerIsSetViewModelTest {
         )
 
     @Test
-    fun `test update value of uiState to SettingTimer when timer is not set`()= runTest{
+    fun `test update value of uiState to SettingTimer when timer is not set`() = runTest {
         timerViewModel.uiState.test {
             assertEquals(UiState.Idle, awaitItem())
             timerViewModel.onLaunchTheApp()
             assertEquals(UiState.SettingTimer, awaitItem())
-
         }
     }
 
     @Test
-    fun `test update value of uiState to TimerSet when timer has been set` () = runTest {
+    fun `test update value of uiState to TimerSet when timer has been set`() = runTest {
         timerViewModel.uiState.test {
             timerRepository.isTimerSet = true
             assertEquals(UiState.Idle, awaitItem())
             timerViewModel.onLaunchTheApp()
             assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem())
-
         }
     }
 }

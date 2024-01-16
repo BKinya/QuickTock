@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.beatrice.quicktock.R
 
-
 @Composable
 fun SetTimerComponent(
     modifier: Modifier = Modifier,
@@ -40,17 +39,15 @@ fun SetTimerComponent(
             duration = duration,
             onDurationChanged = { newDuration ->
                 duration = newDuration
-
             }
         )
         Button(
             onClick = {
                 onSaveTimerBtnClicked(duration.toInt())
             },
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(12.dp)
         ) {
             Text(stringResource(R.string.saveLabel))
         }
     }
 }
-

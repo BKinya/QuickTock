@@ -45,7 +45,6 @@ fun TimerScreen(
                 )
             }
 
-
             is UiState.TimerSet -> {
                 CountDownTimerComponent(
                     onPlayButtonClicked = onPlayButtonClicked,

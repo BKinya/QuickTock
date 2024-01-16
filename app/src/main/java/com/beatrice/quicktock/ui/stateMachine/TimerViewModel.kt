@@ -32,7 +32,7 @@ class TimerViewModel(
         observeTransitions()
     }
 
-    fun onLaunchTheApp(){
+    fun onLaunchTheApp() {
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnStart)
             transitionSharedFlow.emit(transition)
@@ -109,35 +109,31 @@ class TimerViewModel(
         }
     }
 
-    private fun checkTimer(){
+    private fun checkTimer() {
         viewModelScope.launch(dispatcher) {
-            timerRepository.getTimer().collectLatest {duration -> 
-                if (duration > 0){
+            timerRepository.getTimer().collectLatest { duration ->
+                if (duration > 0) {
                     onTimerSet(duration)
-                    
-                }else{
+                } else {
                     onSetTimer()
                 }
-               
             }
         }
     }
 
-    private fun saveTimer(duration: Int){
+    private fun saveTimer(duration: Int) {
         viewModelScope.launch(dispatcher) {
-            timerRepository.saveTimer(duration).collectLatest {duration ->
-                if (duration > 0){
+            timerRepository.saveTimer(duration).collectLatest { duration ->
+                if (duration > 0) {
                     onTimerSet(duration)
-
-                }else{
+                } else {
                     onSetTimer() // Better error reporting
                 }
-
             }
         }
     }
 
-     fun onTimerSet(duration: Int) {
+    fun onTimerSet(duration: Int) {
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnTimerSet(duration))
             transitionSharedFlow.emit(transition)
@@ -151,7 +147,7 @@ class TimerViewModel(
         }
     }
 
-    fun onSaveTimer(duration: Int){
+    fun onSaveTimer(duration: Int) {
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnSaveTimer(duration))
             transitionSharedFlow.emit(transition)

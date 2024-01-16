@@ -14,29 +14,28 @@ val TIMER_KEY = intPreferencesKey("timer_key")
 
 class TimerDataStoreImpl(
     private val userPreferences: DataStore<Preferences>
-): TimerDataStore {
-    override   fun getTimer(): Flow<Int> {
-      return   try {
-           userPreferences.data.map { pref ->
+) : TimerDataStore {
+    override fun getTimer(): Flow<Int> {
+        return try {
+            userPreferences.data.map { pref ->
                 pref[TIMER_KEY] ?: 0
             }
-
         } catch (e: Exception) {
             Log.d("EXCEPTION", "Reading timer => ${e.message}")
             flowOf(0)
         }
     }
 
-    override fun saveTimer(duration: Int): Flow<Int>  = flow{
+    override fun saveTimer(duration: Int): Flow<Int> = flow {
         try {
-         val result = userPreferences.edit { pref ->
+            val result = userPreferences.edit { pref ->
                 pref[TIMER_KEY] = duration
             }
 
-            emit(result[TIMER_KEY]?:0)
+            emit(result[TIMER_KEY] ?: 0)
         } catch (e: Exception) {
             Log.d("EXCEPTION", "Setting timer => ${e.message}")
-           emit(0)
+            emit(0)
         }
     }
 }
