@@ -3,6 +3,7 @@ package com.beatrice.quicktock.views.util
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -49,7 +50,8 @@ class TimerRobot(
     }
 
     fun durationInputIsDisplayed() {
-        composeTestRule.onNodeWithText("0.0"). assertIsDisplayed()
+        val durationTag = composeTestRule.activity.getString(R.string.durationTag)
+        composeTestRule.onNodeWithTag(durationTag).assertIsDisplayed()
     }
 
 
