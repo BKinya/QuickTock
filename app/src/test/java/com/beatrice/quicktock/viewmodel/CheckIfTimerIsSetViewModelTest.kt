@@ -18,13 +18,10 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MainDispatcherExtension::class)
 class CheckIfTimerIsSetViewModelTest {
-    val stateMachine: StateMachine<UiState, UiEvent, SideEffect> =
-        createStateMachine().with {
-            initialState(UiState.Idle)
-        }
+   private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createStateMachine()
 
-    val timerRepository = FakeTimerRepository()
-    val timerViewModel =
+   private val timerRepository = FakeTimerRepository()
+   private val timerViewModel =
         TimerViewModel(
             timerRepository = timerRepository,
             stateMachine = stateMachine,
@@ -35,7 +32,7 @@ class CheckIfTimerIsSetViewModelTest {
     fun `test update value of uiState to SettingTimer when timer is not set`() = runTest {
         timerViewModel.uiState.test {
             assertEquals(UiState.Idle, awaitItem())
-            timerViewModel.onLaunchTheApp()
+            timerViewModel.onStart()
             assertEquals(UiState.SettingTimer, awaitItem())
         }
     }
@@ -45,7 +42,7 @@ class CheckIfTimerIsSetViewModelTest {
         timerViewModel.uiState.test {
             timerRepository.isTimerSet = true
             assertEquals(UiState.Idle, awaitItem())
-            timerViewModel.onLaunchTheApp()
+            timerViewModel.onStart()
             assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem())
         }
     }

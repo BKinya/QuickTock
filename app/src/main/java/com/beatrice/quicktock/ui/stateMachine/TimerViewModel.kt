@@ -32,7 +32,7 @@ class TimerViewModel(
         observeTransitions()
     }
 
-    fun onLaunchTheApp() {
+    fun onStart() {
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnStart)
             transitionSharedFlow.emit(transition)
