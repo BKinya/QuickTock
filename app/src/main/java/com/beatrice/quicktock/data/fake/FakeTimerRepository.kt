@@ -13,7 +13,7 @@ class FakeTimerRepository : TimerRepository {
         }
     }
 
-    override suspend fun saveTimer(duration: Int): Flow<Int> = flowOf(10)
+    override suspend fun saveTimer(duration: Int): Flow<Int> = if (duration > 0) flowOf(10) else flowOf(0)
 
     override suspend fun getTimer(): Flow<Int> = if (isTimerSet) flowOf(10) else flowOf(0)
 }

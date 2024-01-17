@@ -127,7 +127,7 @@ class TimerViewModel(
                 if (duration > 0) {
                     onTimerSet(duration)
                 } else {
-                    onSetTimer() // Better error reporting
+                    onSetTimer() // TODO: Better error reporting
                 }
             }
         }

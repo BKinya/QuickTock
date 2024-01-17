@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MainDispatcherExtension::class)
-class CheckIfTimerIsSetViewModelTest {
+class CheckTimerViewModelTest {
    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createStateMachine()
 
    private val timerRepository = FakeTimerRepository()
@@ -29,16 +29,29 @@ class CheckIfTimerIsSetViewModelTest {
         )
 
     @Test
-    fun `test update value of uiState to SettingTimer when timer is not set`() = runTest {
+    fun `checkTimer - uiState should be SettingTimer when timer duration has not been set`() = runTest {
         timerViewModel.uiState.test {
+            /**
+             * verify initial value
+             */
             assertEquals(UiState.Idle, awaitItem())
+
+            /**
+             * Check if the timer has been set
+             */
             timerViewModel.onStart()
             assertEquals(UiState.SettingTimer, awaitItem())
+            /**
+             * Save timer
+             */
+            timerViewModel.onSaveTimer(TEST_DURATION)
+            assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem())
+
         }
     }
 
     @Test
-    fun `test update value of uiState to TimerSet when timer has been set`() = runTest {
+    fun `checkTimer - uiState should be TimerSet when timer duration has been set`() = runTest {
         timerViewModel.uiState.test {
             timerRepository.isTimerSet = true
             assertEquals(UiState.Idle, awaitItem())
@@ -46,4 +59,5 @@ class CheckIfTimerIsSetViewModelTest {
             assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem())
         }
     }
+
 }
