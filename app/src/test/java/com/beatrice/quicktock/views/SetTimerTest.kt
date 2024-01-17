@@ -1,7 +1,14 @@
 package com.beatrice.quicktock.views
 
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import com.beatrice.quicktock.MainActivity
+import com.beatrice.quicktock.R
 import com.beatrice.quicktock.TestApplication
 import com.beatrice.quicktock.views.util.launchTimerScreen
 import org.junit.After
@@ -23,17 +30,21 @@ class SetTimerTest {
         stopKoin()
     }
 
+    /**
+     * Starting the activity when the timer is not set
+     */
     @Test
-    fun testSettingTimer() {
-        launchTimerScreen(composeTestRule) {
+    fun setTimerTest() {
+
+        launchTimerScreen(composeTestRule){
             setTimerTitleIsDisplayed()
-            durationInputIsDisplayed()
-            saveButtonIsDisplayed()
-            enterDuration()
-            clickSaveButton()
+            enterTimerDuration()
+            clickSaveBtn()
         } verify {
             timerDurationTextIsPresent()
             playButtonIsDisplayed()
         }
     }
+
+
 }
