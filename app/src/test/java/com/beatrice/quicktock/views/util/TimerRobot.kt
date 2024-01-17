@@ -1,8 +1,6 @@
 package com.beatrice.quicktock.views.util
 
-import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -23,13 +21,6 @@ fun launchTimerScreen(
     ).apply(block)
 }
 
-fun sendUiEvent(// TODO: I'll not need this. So I should remove it
-    composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
-    block: SetTimerRobot.() -> Unit
-): SetTimerRobot {
-    return SetTimerRobot(composeTestRule).apply(block)
-}
-
 class SetTimerRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
@@ -48,25 +39,12 @@ class SetTimerRobot(
         composeTestRule.onNodeWithText(saveLabel).assertIsDisplayed().performClick()
     }
 
-    infix fun verify(block: SetTimerVerification.() -> Unit): SetTimerVerification {
-        return SetTimerVerification(composeTestRule).apply(block)
+    infix fun verify(block: TimerVerification.() -> Unit): TimerVerification {
+        return TimerVerification(composeTestRule).apply(block)
     }
 
 }
 
 
-class SetTimerVerification(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
-) {
-    fun timerDurationTextIsPresent() {
-        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
-        composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
-    }
 
-
-    fun playButtonIsDisplayed() {
-        val playButtonDesc = composeTestRule.activity.getString(R.string.playBtnDesc)
-        composeTestRule.onNodeWithContentDescription(playButtonDesc).assertIsDisplayed()
-    }
-}
 
