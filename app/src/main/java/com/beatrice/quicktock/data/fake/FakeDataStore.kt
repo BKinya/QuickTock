@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.flowOf
 class FakeDataStore : TimerDataStore {
     override fun getTimer(): Flow<Int> = flowOf(0)
 
-    override fun saveTimer(duration: Int): Flow<Int> = flowOf(10)
+    override fun saveTimer(duration: Int): Flow<Int> = flowOf(TEST_DURATION)
 }

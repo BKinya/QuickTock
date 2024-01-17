@@ -35,7 +35,6 @@ class SetTimerTest {
      */
     @Test
     fun setTimerTest() {
-
         launchTimerScreen(composeTestRule){
             setTimerTitleIsDisplayed()
             enterTimerDuration()

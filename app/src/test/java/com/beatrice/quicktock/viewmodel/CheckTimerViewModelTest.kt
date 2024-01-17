@@ -2,13 +2,13 @@ package com.beatrice.quicktock.viewmodel
 
 import app.cash.turbine.test
 import com.beatrice.quicktock.data.fake.FakeTimerRepository
+import com.beatrice.quicktock.data.fake.TEST_DURATION
 import com.beatrice.quicktock.di.createStateMachine
 import com.beatrice.quicktock.ui.stateMachine.SideEffect
 import com.beatrice.quicktock.ui.stateMachine.TimerViewModel
 import com.beatrice.quicktock.ui.stateMachine.UiEvent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.beatrice.quicktock.util.MainDispatcherExtension
-import com.beatrice.quicktock.views.TEST_DURATION
 import com.tinder.StateMachine
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
