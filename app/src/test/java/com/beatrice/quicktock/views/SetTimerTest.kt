@@ -1,16 +1,9 @@
 package com.beatrice.quicktock.views
 
-import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextInput
 import com.beatrice.quicktock.MainActivity
-import com.beatrice.quicktock.R
 import com.beatrice.quicktock.TestApplication
-import com.beatrice.quicktock.views.util.launchTimerScreen
+import com.beatrice.quicktock.views.util.launchAndVerifyTimerScreen
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
@@ -35,7 +28,7 @@ class SetTimerTest {
      */
     @Test
     fun setTimerTest() {
-        launchTimerScreen(composeTestRule){
+        launchAndVerifyTimerScreen(composeTestRule) {
             setTimerTitleIsDisplayed()
             enterTimerDuration()
             clickSaveBtn()
@@ -44,6 +37,4 @@ class SetTimerTest {
             playButtonIsDisplayed()
         }
     }
-
-
 }

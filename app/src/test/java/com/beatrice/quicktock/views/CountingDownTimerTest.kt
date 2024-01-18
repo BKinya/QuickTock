@@ -3,8 +3,9 @@ package com.beatrice.quicktock.views
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.beatrice.quicktock.MainActivity
 import com.beatrice.quicktock.TestApplication
-import com.beatrice.quicktock.views.util.launchTimerScreen
-import com.beatrice.quicktock.views.util.sendUiEvent
+import com.beatrice.quicktock.data.fake.TEST_DURATION
+import com.beatrice.quicktock.views.util.launchAndVerifyTimerScreen
+import com.beatrice.quicktock.views.util.waitUntilConditionMet
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -12,10 +13,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
-
-const val TEST_DURATION = 5
-const val TIME_LEFT_ONE = 7 // TODO: Update these later... the VM test should be failing
-const val TIME_LEFT_TWO = 1
 
 @RunWith(RobolectricTestRunner::class)
 @Config(application = TestApplication::class)
@@ -35,53 +32,29 @@ class CountingDownTimerTest {
         }
     }
 
-    /**
-     * 1. Count Down to finish without interruption
-     * 2. Count Down  then pause then resume then finish
-     * 3. count Down then stop
-     * 4. count down pause stop
-     */
-
     @Test
-    fun `test counting down to finish`() {
-        launchTimerScreen(composeTestRule) {
-            timerDurationTextIsPresent()
-            playButtonIsPresentAndClick()
+    fun `test start counting down to finish`() {
+        launchAndVerifyTimerScreen(composeTestRule) {
+            timerDurationTextIsDisplayed()
+            playButtonIsDisplayedAndClick()
         } verify {
             timerDurationTextIsPresent()
             playButtonNotPresent()
         }
 
-        // wait till pause button appears
-        // wait until
-
-        /**
-         * Send [onContinueCountingDown] event to state machine
-         */
-        sendUiEvent(composeTestRule) {
-            composeTestRule.activity.timerViewModel.onContinueCountingDown(TEST_DURATION)
+        waitUntilConditionMet(composeTestRule) {
+            timeLeftTextIsDisplayed()
         } verify {
-            waitForTimeLeftTextToUpdate()
-            pauseButtonPresent()
-            stopButtonIsPresent()
-            playButtonNotPresent()
+            timeLeftTextIsDisplayed()
+            pauseButtonIsDisplayed()
+            stopButtonIsDisplayed()
         }
 
-        /**
-         * Send [onFinish] event to state machine
-         */
-
-        sendUiEvent(composeTestRule) {
-            composeTestRule.activity.timerViewModel.onFinishCountingDown()
+        waitUntilConditionMet(composeTestRule) {
+            // wait until it finished countdown
+            pauseButtonIsNotPresent()
         } verify {
-            waitUntilFinishTextIsDispalyed()
-            pauseButtonNotPresent()
-            stopButtonNotPresent()
+            finishedTextIsDispalayed()
         }
     }
-
-    // TODO 2:
-    /**
-     * COUNTING DOWN -> PAUSE -> RESUME -> FINISH
-     */
 }

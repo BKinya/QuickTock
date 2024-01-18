@@ -18,10 +18,10 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MainDispatcherExtension::class)
 class CheckTimerViewModelTest {
-   private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createStateMachine()
+    private val stateMachine: StateMachine<UiState, UiEvent, SideEffect> = createStateMachine()
 
-   private val timerRepository = FakeTimerRepository()
-   private val timerViewModel =
+    private val timerRepository = FakeTimerRepository()
+    private val timerViewModel =
         TimerViewModel(
             timerRepository = timerRepository,
             stateMachine = stateMachine,
@@ -46,7 +46,6 @@ class CheckTimerViewModelTest {
              */
             timerViewModel.onSaveTimer(TEST_DURATION)
             assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem())
-
         }
     }
 
@@ -59,5 +58,4 @@ class CheckTimerViewModelTest {
             assertEquals(UiState.TimerSet(TEST_DURATION), awaitItem())
         }
     }
-
 }
