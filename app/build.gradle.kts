@@ -62,7 +62,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
 
-    // Compose
+    // Jetpack Compose
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
@@ -78,7 +78,6 @@ dependencies {
 
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     // Koin
     val koinVersion = "3.5.3"
