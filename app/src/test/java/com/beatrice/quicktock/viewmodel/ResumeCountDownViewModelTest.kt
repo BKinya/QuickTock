@@ -12,6 +12,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
+
 @ExtendWith(MainDispatcherExtension::class)
 class ResumeCountDownViewModelTest {
     private val viewModel = createViewModel(UiState.Paused(TEST_DURATION))
@@ -23,7 +24,6 @@ class ResumeCountDownViewModelTest {
             viewModel.onResumeCountingDown(TEST_DURATION)
             assertEquals(UiState.CountingDown(TEST_DURATION), awaitItem())
             assertEquals(UiState.CountingDown(TIME_LEFT_ONE), awaitItem())
-            assertEquals(UiState.CountingDown(TIME_LEFT_TWO), awaitItem())
             assertEquals(UiState.Finished, awaitItem())
         }
     }

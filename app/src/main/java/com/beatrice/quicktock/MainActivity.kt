@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                         onPauseButtonClicked = timerViewModel::onPauseCountingDown,
                         onResumeButtonClicked = timerViewModel::onResumeCountingDown,
                         onSaveTimerBtnClicked = timerViewModel::onSaveTimer,
-                        onStopButtonClicked = timerViewModel::onStopCount
+                        onStopButtonClicked = timerViewModel::onStopCountDown
                     )
                 }
             }

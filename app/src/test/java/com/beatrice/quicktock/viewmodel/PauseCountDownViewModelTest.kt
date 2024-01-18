@@ -16,7 +16,7 @@ class PauseCountDownViewModelTest {
     private val viewModel = createViewModel(initialState = UiState.CountingDown(TEST_DURATION))
 
     @Test
-    fun `update value of uiState to Paused when the StateMachine transitions to Paused state`() = runTest {
+    fun `when the state machine  receives onPause event update the value of uiState to Paused`() = runTest {
         viewModel.uiState.test {
             assertEquals(UiState.CountingDown(TEST_DURATION), awaitItem()) // verify initial value
             viewModel.onPauseCountingDown(TEST_DURATION)
@@ -24,5 +24,12 @@ class PauseCountDownViewModelTest {
         }
     }
 
-    // TODO: Test stopped state
+    @Test
+    fun `when the state machine receives onStop event update the value of UiState to Idle`() = runTest{
+        viewModel.uiState.test {
+            assertEquals(UiState.CountingDown(TEST_DURATION), awaitItem()) // verify initial value
+            viewModel.onStopCountDown()
+            assertEquals(UiState.Idle, awaitItem())
+         }
+    }
 }

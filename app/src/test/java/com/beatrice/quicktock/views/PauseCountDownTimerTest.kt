@@ -45,7 +45,7 @@ class PauseCountDownTimerTest {
 
     /**
      * pause and resume
-     * pause and stop
+     * pause and stop ... TODO
      * stop
      */
 
