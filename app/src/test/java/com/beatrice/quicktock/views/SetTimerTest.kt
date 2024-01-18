@@ -19,7 +19,7 @@ class SetTimerTest {
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @After
-    fun tearUp() {
+    fun tearDown() {
         stopKoin()
     }
 

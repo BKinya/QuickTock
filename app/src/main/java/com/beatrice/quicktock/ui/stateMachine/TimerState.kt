@@ -46,5 +46,4 @@ sealed interface SideEffect {
     @JvmInline value class SaveTimer(val duration: Int) : SideEffect
 
     @JvmInline value class DoCountDown(val duration: Int) : SideEffect
-
 }

@@ -11,7 +11,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.beatrice.quicktock.MainActivity
 import com.beatrice.quicktock.R
 import com.beatrice.quicktock.data.fake.TEST_DURATION
-import com.beatrice.quicktock.data.fake.TIME_LEFT_ONE
 
 class TimerRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>

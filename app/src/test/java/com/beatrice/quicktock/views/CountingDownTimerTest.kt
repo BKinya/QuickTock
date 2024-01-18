@@ -6,10 +6,12 @@ import com.beatrice.quicktock.TestApplication
 import com.beatrice.quicktock.data.fake.TEST_DURATION
 import com.beatrice.quicktock.views.util.launchAndVerifyTimerScreen
 import com.beatrice.quicktock.views.util.waitUntilConditionMet
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
@@ -30,6 +32,11 @@ class CountingDownTimerTest {
         with(composeTestRule.activity.timerViewModel) {
             onTimerSet(TEST_DURATION)
         }
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
     }
 
     @Test
