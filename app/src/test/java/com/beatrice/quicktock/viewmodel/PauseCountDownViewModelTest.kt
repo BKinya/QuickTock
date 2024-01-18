@@ -25,11 +25,11 @@ class PauseCountDownViewModelTest {
     }
 
     @Test
-    fun `when the state machine receives onStop event update the value of UiState to Idle`() = runTest{
+    fun `when the state machine receives onStop event update the value of UiState to Idle`() = runTest {
         viewModel.uiState.test {
             assertEquals(UiState.CountingDown(TEST_DURATION), awaitItem()) // verify initial value
             viewModel.onStopCountDown()
             assertEquals(UiState.Idle, awaitItem())
-         }
+        }
     }
 }

@@ -13,8 +13,12 @@ class IdlingRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
 
-    fun timeLeftTextIsDisplayed_01() {
+    fun timeLeftTextIsDisplayedOne() {
         val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, com.beatrice.quicktock.data.fake.TIME_LEFT_ONE)
+        composeTestRule.waitUntilExactlyOneExists(hasText(timeLeft), 4000)
+    }
+    fun timeLeftTextIsDisplayedTwo() {
+        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, com.beatrice.quicktock.data.fake.TIME_LEFT_TWO)
         composeTestRule.waitUntilExactlyOneExists(hasText(timeLeft), 4000)
     }
     fun pauseButtonIsNotPresent() {
@@ -24,11 +28,5 @@ class IdlingRobot(
 
     infix fun verify(block: TimerVerification.() -> Unit): TimerVerification {
         return TimerVerification(composeTestRule).apply(block)
-    }
-
-    fun timeLeftTextIsDisplayed_02() {
-        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, com.beatrice.quicktock.data.fake.TIME_LEFT_TWO)
-        composeTestRule.waitUntilExactlyOneExists(hasText(timeLeft), 4000)
-
     }
 }

@@ -3,7 +3,6 @@ package com.beatrice.quicktock.viewmodel
 import app.cash.turbine.test
 import com.beatrice.quicktock.data.fake.TEST_DURATION
 import com.beatrice.quicktock.data.fake.TIME_LEFT_ONE
-import com.beatrice.quicktock.data.fake.TIME_LEFT_TWO
 import com.beatrice.quicktock.ui.stateMachine.UiState
 import com.beatrice.quicktock.util.MainDispatcherExtension
 import com.beatrice.quicktock.util.createViewModel
@@ -11,7 +10,6 @@ import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-
 
 @ExtendWith(MainDispatcherExtension::class)
 class ResumeCountDownViewModelTest {

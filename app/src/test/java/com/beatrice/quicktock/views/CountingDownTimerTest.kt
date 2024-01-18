@@ -43,9 +43,9 @@ class CountingDownTimerTest {
         }
 
         waitUntilConditionMet(composeTestRule) {
-            timeLeftTextIsDisplayed_01()
+            timeLeftTextIsDisplayedOne()
         } verify {
-            timeLeftTextIsDisplayed_01()
+            timeLeftTextIsDisplayedOne()
             pauseButtonIsDisplayed()
             stopButtonIsDisplayed()
         }

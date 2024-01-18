@@ -74,8 +74,6 @@ fun TimerScreen(
                 // Show some fancy animations
                 Text("Finished")
             }
-
-
         }
     }
 }

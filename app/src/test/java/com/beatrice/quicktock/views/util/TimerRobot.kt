@@ -71,7 +71,4 @@ class TimerRobot(
     infix fun verify(block: TimerVerification.() -> Unit): TimerVerification {
         return TimerVerification(composeTestRule).apply(block)
     }
-
-
-
 }

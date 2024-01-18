@@ -43,7 +43,6 @@ class PauseCountDownTimerTest {
         stopKoin()
     }
 
-
     @Test
     fun `test pause and resume counting down`() {
         launchAndVerifyTimerScreen(composeTestRule) {
@@ -53,31 +52,32 @@ class PauseCountDownTimerTest {
         }
 
         waitUntilConditionMet(composeTestRule) {
-            timeLeftTextIsDisplayed_01()
+            timeLeftTextIsDisplayedOne()
         }
 
         // Pause count down
         performAction(composeTestRule) {
             clickPauseButton()
         } verify {
-            timeLeftTextIsDisplayed_01()
+            timeLeftTextIsDisplayedOne()
             resumeButtonIsDisplayed()
             stopButtonIsDisplayed()
+            pauseButtonIsNotPresent()
         }
         // Resume count down
         performAction(composeTestRule) {
             clickResumeButton()
         } verify {
-            timeLeftTextIsDisplayed_01()
+            timeLeftTextIsDisplayedOne()
             resumeButtonNotPresent()
             pauseButtonIsDisplayed()
             stopButtonIsDisplayed()
         }
 
         waitUntilConditionMet(composeTestRule) {
-            timeLeftTextIsDisplayed_02()
+            timeLeftTextIsDisplayedTwo()
         } verify {
-            timeLeftTextIsDisplayed_02()
+            timeLeftTextIsDisplayedTwo()
             pauseButtonIsDisplayed()
             stopButtonIsDisplayed()
         }
@@ -99,7 +99,7 @@ class PauseCountDownTimerTest {
         }
 
         waitUntilConditionMet(composeTestRule) {
-            timeLeftTextIsDisplayed_01()
+            timeLeftTextIsDisplayedOne()
         }
 
         // stop count down
@@ -120,13 +120,13 @@ class PauseCountDownTimerTest {
         }
 
         waitUntilConditionMet(composeTestRule) {
-            timeLeftTextIsDisplayed_01()
+            timeLeftTextIsDisplayedOne()
         }
 
         performAction(composeTestRule) {
             clickPauseButton()
         } verify {
-            timeLeftTextIsDisplayed_01()
+            timeLeftTextIsDisplayedOne()
             resumeButtonIsDisplayed()
             stopButtonIsDisplayed()
         }
@@ -137,6 +137,5 @@ class PauseCountDownTimerTest {
             timerDurationTextIsDisplayed()
             playButtonIsDisplayed()
         }
-
     }
 }

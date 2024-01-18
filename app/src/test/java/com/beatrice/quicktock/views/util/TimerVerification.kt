@@ -27,7 +27,7 @@ class TimerVerification(
         composeTestRule.onNodeWithContentDescription(playButtonDesc).assertDoesNotExist()
     }
 
-    fun timeLeftTextIsDisplayed_01() {
+    fun timeLeftTextIsDisplayedOne() {
         val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, com.beatrice.quicktock.data.fake.TIME_LEFT_ONE)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
@@ -64,7 +64,7 @@ class TimerVerification(
         composeTestRule.onNodeWithContentDescription(resumeBtnDesc).assertDoesNotExist()
     }
 
-    fun timeLeftTextIsDisplayed_02() {
+    fun timeLeftTextIsDisplayedTwo() {
         val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, com.beatrice.quicktock.data.fake.TIME_LEFT_TWO)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
