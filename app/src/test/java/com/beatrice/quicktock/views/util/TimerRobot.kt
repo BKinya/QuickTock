@@ -11,6 +11,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.beatrice.quicktock.MainActivity
 import com.beatrice.quicktock.R
 import com.beatrice.quicktock.data.fake.TEST_DURATION
+import com.beatrice.quicktock.data.fake.TIME_LEFT_ONE
 
 class TimerRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
@@ -47,12 +48,30 @@ class TimerRobot(
         composeTestRule.onNodeWithContentDescription(stopBtnDesc).assertIsDisplayed()
     }
 
-    fun pauseButtonIsDisplayedAndClick() {
+    fun pauseButtonIsDisplayed() {
         val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
-        composeTestRule.onNodeWithContentDescription(pauseBtnDesc).assertIsDisplayed().performClick()
+        composeTestRule.onNodeWithContentDescription(pauseBtnDesc).assertIsDisplayed()
+    }
+
+    fun clickPauseButton() {
+        val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
+        composeTestRule.onNodeWithContentDescription(pauseBtnDesc).performClick()
+    }
+
+    fun clickStopButton() {
+        val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
+        composeTestRule.onNodeWithContentDescription(stopBtnDesc).performClick()
+    }
+
+    fun timeLeftTextIsDisplayed() {
+        val duration = composeTestRule.activity.getString(R.string.durationLabel, TIME_LEFT_ONE)
+        composeTestRule.onNodeWithText(duration).assertIsDisplayed()
     }
 
     infix fun verify(block: TimerVerification.() -> Unit): TimerVerification {
         return TimerVerification(composeTestRule).apply(block)
     }
+
+
+
 }

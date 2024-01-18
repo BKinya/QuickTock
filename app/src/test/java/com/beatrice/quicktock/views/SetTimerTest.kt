@@ -33,7 +33,7 @@ class SetTimerTest {
             enterTimerDuration()
             clickSaveBtn()
         } verify {
-            timerDurationTextIsPresent()
+            timerDurationTextIsDisplayed()
             playButtonIsDisplayed()
         }
     }

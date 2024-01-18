@@ -24,4 +24,9 @@ class ActionRobot(
         composeTestRule.onNodeWithContentDescription(stopBtnDesc)
             .performClick()
     }
+
+    fun clickPauseButton() {
+        val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
+        composeTestRule.onNodeWithContentDescription(pauseBtnDesc).performClick()
+    }
 }

@@ -12,7 +12,7 @@ import com.beatrice.quicktock.data.fake.TEST_DURATION
 class TimerVerification(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
-    fun timerDurationTextIsPresent() {
+    fun timerDurationTextIsDisplayed() {
         val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, TEST_DURATION)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
@@ -27,7 +27,7 @@ class TimerVerification(
         composeTestRule.onNodeWithContentDescription(playButtonDesc).assertDoesNotExist()
     }
 
-    fun timeLeftTextIsDisplayed() {
+    fun timeLeftTextIsDisplayed_01() {
         val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, com.beatrice.quicktock.data.fake.TIME_LEFT_ONE)
         composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
@@ -62,5 +62,10 @@ class TimerVerification(
     fun resumeButtonNotPresent() {
         val resumeBtnDesc = composeTestRule.activity.getString(R.string.resumeButtonDesc)
         composeTestRule.onNodeWithContentDescription(resumeBtnDesc).assertDoesNotExist()
+    }
+
+    fun timeLeftTextIsDisplayed_02() {
+        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, com.beatrice.quicktock.data.fake.TIME_LEFT_TWO)
+        composeTestRule.onNodeWithText(timeLeft).assertIsDisplayed()
     }
 }

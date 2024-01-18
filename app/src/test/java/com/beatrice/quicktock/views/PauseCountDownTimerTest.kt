@@ -54,31 +54,41 @@ class PauseCountDownTimerTest {
         launchAndVerifyTimerScreen(composeTestRule) {
             timerDurationTextIsDisplayed()
             stopButtonIsDisplayed()
-            pauseButtonIsDisplayedAndClick()
-        } verify {
-            pauseButtonIsNotPresent()
+            pauseButtonIsDisplayed()
+        }
+
+        waitUntilConditionMet(composeTestRule){
+            timeLeftTextIsDisplayed_01()
+        }
+
+        // Pause count down
+        performAction(composeTestRule){
+            clickPauseButton()
+        }verify {
+            timeLeftTextIsDisplayed_01()
             resumeButtonIsDisplayed()
             stopButtonIsDisplayed()
         }
-
+        // Resume count down
         performAction(composeTestRule) {
             clickResumeButton()
         } verify {
+            timeLeftTextIsDisplayed_01()
             resumeButtonNotPresent()
             pauseButtonIsDisplayed()
             stopButtonIsDisplayed()
         }
 
         waitUntilConditionMet(composeTestRule) {
-            timeLeftTextIsDisplayed()
+            timeLeftTextIsDisplayed_02()
         } verify {
-            timeLeftTextIsDisplayed()
+            timeLeftTextIsDisplayed_02()
             pauseButtonIsDisplayed()
             stopButtonIsDisplayed()
         }
 
+        // wait until it finishes countdown
         waitUntilConditionMet(composeTestRule) {
-            // wait until it finished countdown
             pauseButtonIsNotPresent()
         } verify {
             finishedTextIsDispalayed()
@@ -87,9 +97,27 @@ class PauseCountDownTimerTest {
 
     @Test
     fun `test stop countingDown`() {
-    }
+        launchAndVerifyTimerScreen(composeTestRule){
+         timerDurationTextIsDisplayed()
+            stopButtonIsDisplayed()
+            pauseButtonIsDisplayed()
+        }
 
-    @Test
-    fun `test `() {
+        waitUntilConditionMet(composeTestRule){
+            timeLeftTextIsDisplayed_01()
+        }
+
+        // stop count down
+        performAction(composeTestRule){
+            clickStopButton()
+        }verify {
+            timerDurationTextIsDisplayed()
+            playButtonIsDisplayed()
+        }
     }
+//
+    // pause then stop
+//    @Test
+//    fun `test `() {
+//    }
 }

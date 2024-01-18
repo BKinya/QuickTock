@@ -38,14 +38,14 @@ class CountingDownTimerTest {
             timerDurationTextIsDisplayed()
             playButtonIsDisplayedAndClick()
         } verify {
-            timerDurationTextIsPresent()
+            timerDurationTextIsDisplayed()
             playButtonNotPresent()
         }
 
         waitUntilConditionMet(composeTestRule) {
-            timeLeftTextIsDisplayed()
+            timeLeftTextIsDisplayed_01()
         } verify {
-            timeLeftTextIsDisplayed()
+            timeLeftTextIsDisplayed_01()
             pauseButtonIsDisplayed()
             stopButtonIsDisplayed()
         }
