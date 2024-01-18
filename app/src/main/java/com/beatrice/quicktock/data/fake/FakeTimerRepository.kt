@@ -11,7 +11,7 @@ const val TIME_LEFT_TWO = 1
 class FakeTimerRepository : TimerRepository {
     var isTimerSet = false
     override fun doCountDown(duration: Int): Flow<Int> = flow {
-        for (i in duration downTo 0 step 1) {
+        for (i in duration downTo 0 step 2) {
             emit(i)
         }
     }

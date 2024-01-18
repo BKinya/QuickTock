@@ -33,7 +33,7 @@ class CountingDownTimerTest {
     }
 
     @Test
-    fun `test start counting down to finish`() {
+    fun `test counting down to finish`() {
         launchAndVerifyTimerScreen(composeTestRule) {
             timerDurationTextIsDisplayed()
             playButtonIsDisplayedAndClick()

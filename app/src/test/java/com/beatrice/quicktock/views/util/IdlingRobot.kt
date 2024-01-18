@@ -19,7 +19,6 @@ class IdlingRobot(
     }
     fun pauseButtonIsNotPresent() {
         val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
-        val timeLeft = composeTestRule.activity.getString(R.string.durationLabel, com.beatrice.quicktock.data.fake.TIME_LEFT_TWO)
         composeTestRule.waitUntilDoesNotExist(hasContentDescription(pauseBtnDesc), 4000)
     }
 
