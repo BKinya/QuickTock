@@ -89,6 +89,10 @@ class TimerViewModel(
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnStop)
             transitionSharedFlow.emit(transition)
+
+            if (::countDownJob.isInitialized) {
+                countDownJob.cancelAndJoin()
+            }
         }
     }
 

@@ -43,11 +43,6 @@ class PauseCountDownTimerTest {
         stopKoin()
     }
 
-    /**
-     * pause and resume
-     * pause and stop ... TODO
-     * stop
-     */
 
     @Test
     fun `test pause and resume counting down`() {
@@ -57,14 +52,14 @@ class PauseCountDownTimerTest {
             pauseButtonIsDisplayed()
         }
 
-        waitUntilConditionMet(composeTestRule){
+        waitUntilConditionMet(composeTestRule) {
             timeLeftTextIsDisplayed_01()
         }
 
         // Pause count down
-        performAction(composeTestRule){
+        performAction(composeTestRule) {
             clickPauseButton()
-        }verify {
+        } verify {
             timeLeftTextIsDisplayed_01()
             resumeButtonIsDisplayed()
             stopButtonIsDisplayed()
@@ -97,22 +92,51 @@ class PauseCountDownTimerTest {
 
     @Test
     fun `test stop countingDown`() {
-        launchAndVerifyTimerScreen(composeTestRule){
-         timerDurationTextIsDisplayed()
+        launchAndVerifyTimerScreen(composeTestRule) {
+            timerDurationTextIsDisplayed()
             stopButtonIsDisplayed()
             pauseButtonIsDisplayed()
         }
 
-        waitUntilConditionMet(composeTestRule){
+        waitUntilConditionMet(composeTestRule) {
             timeLeftTextIsDisplayed_01()
         }
 
         // stop count down
-        performAction(composeTestRule){
+        performAction(composeTestRule) {
             clickStopButton()
-        }verify {
+        } verify {
             timerDurationTextIsDisplayed()
             playButtonIsDisplayed()
         }
+    }
+
+    @Test
+    fun `test pause then stop counting down`() {
+        launchAndVerifyTimerScreen(composeTestRule) {
+            timerDurationTextIsDisplayed()
+            stopButtonIsDisplayed()
+            pauseButtonIsDisplayed()
+        }
+
+        waitUntilConditionMet(composeTestRule) {
+            timeLeftTextIsDisplayed_01()
+        }
+
+        performAction(composeTestRule) {
+            clickPauseButton()
+        } verify {
+            timeLeftTextIsDisplayed_01()
+            resumeButtonIsDisplayed()
+            stopButtonIsDisplayed()
+        }
+
+        performAction(composeTestRule) {
+            clickStopButton()
+        } verify {
+            timerDurationTextIsDisplayed()
+            playButtonIsDisplayed()
+        }
+
     }
 }

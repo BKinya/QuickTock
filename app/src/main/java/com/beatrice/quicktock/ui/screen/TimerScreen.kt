@@ -65,7 +65,8 @@ fun TimerScreen(
                     duration = uiState.timeLeft,
                     showStopButton = true,
                     showResumeButton = true,
-                    onResumeButtonClicked = onResumeButtonClicked
+                    onResumeButtonClicked = onResumeButtonClicked,
+                    onStopButtonClicked = onStopButtonClicked
                 )
             }
 
