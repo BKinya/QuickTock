@@ -1,13 +1,5 @@
 package com.beatrice.quicktock.ui.stateMachine
 
-/**
- * I'll first read  and write the value from datastore
- * Then Implement setting timer functionality and make sure I could count down till the end
- * Then I'll try the configuration changes and process death shenanigans
- * and see how it goes.
- *
- *
- */
 sealed interface UiState {
     data object Idle : UiState
 
@@ -55,7 +47,4 @@ sealed interface SideEffect {
 
     @JvmInline value class DoCountDown(val duration: Int) : SideEffect
 
-    data object Restarting : SideEffect
-
-    data object Reset : SideEffect
 }

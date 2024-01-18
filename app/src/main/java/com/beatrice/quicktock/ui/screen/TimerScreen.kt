@@ -22,7 +22,6 @@ fun TimerScreen(
     Scaffold(
         modifier = modifier
     ) { _ ->
-        println("state => $uiState")
 
         when (uiState) {
             is UiState.Idle -> {
@@ -71,7 +70,6 @@ fun TimerScreen(
             }
 
             is UiState.Finished -> {
-                // Show some fancy animations
                 Text("Finished")
             }
         }

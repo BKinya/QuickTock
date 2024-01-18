@@ -98,17 +98,3 @@ fun ActionButton(
     }
 }
 
-@Composable
-@Preview
-fun ActionButtonPreview() {
-    ActionButton(
-        resourceId = R.drawable.ic_play,
-        onButtonClicked = {},
-        conteDescription = "",
-        isVisible = true,
-        modifier =
-        Modifier
-            .background(Color.White)
-            .fillMaxSize()
-    )
-}

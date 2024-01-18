@@ -39,8 +39,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    /**
-     * TODO: When activity enters stopped state and timer is paused... what should happen
-     * or when the activity is recreated... ?
-     */
 }

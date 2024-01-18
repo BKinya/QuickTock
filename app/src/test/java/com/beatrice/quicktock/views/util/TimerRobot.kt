@@ -53,21 +53,6 @@ class TimerRobot(
         composeTestRule.onNodeWithContentDescription(pauseBtnDesc).assertIsDisplayed()
     }
 
-    fun clickPauseButton() {
-        val pauseBtnDesc = composeTestRule.activity.getString(R.string.pauseButtonDesc)
-        composeTestRule.onNodeWithContentDescription(pauseBtnDesc).performClick()
-    }
-
-    fun clickStopButton() {
-        val stopBtnDesc = composeTestRule.activity.getString(R.string.stopButtonDesc)
-        composeTestRule.onNodeWithContentDescription(stopBtnDesc).performClick()
-    }
-
-    fun timeLeftTextIsDisplayed() {
-        val duration = composeTestRule.activity.getString(R.string.durationLabel, TIME_LEFT_ONE)
-        composeTestRule.onNodeWithText(duration).assertIsDisplayed()
-    }
-
     infix fun verify(block: TimerVerification.() -> Unit): TimerVerification {
         return TimerVerification(composeTestRule).apply(block)
     }

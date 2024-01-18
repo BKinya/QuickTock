@@ -67,7 +67,6 @@ class TimerViewModel(
             transitionSharedFlow.emit(transition)
 
             // Pause the counting down
-
             /***
              * This is a little fragile because changing the order makes test to fail
              * FIXME: Can it be improved?
@@ -138,7 +137,7 @@ class TimerViewModel(
                 if (duration > 0) {
                     onTimerSet(duration)
                 } else {
-                    onSetTimer() // TODO: Better error reporting
+                    onSetTimer()
                 }
             }
         }
