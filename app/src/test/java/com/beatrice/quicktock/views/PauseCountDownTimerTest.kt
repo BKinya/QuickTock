@@ -115,9 +115,4 @@ class PauseCountDownTimerTest {
             playButtonIsDisplayed()
         }
     }
-//
-    // pause then stop
-//    @Test
-//    fun `test `() {
-//    }
 }

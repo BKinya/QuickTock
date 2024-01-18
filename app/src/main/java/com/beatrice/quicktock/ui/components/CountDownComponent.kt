@@ -28,6 +28,7 @@ fun CountDownTimerComponent(
     onPlayButtonClicked: (Int) -> Unit = {},
     onPauseButtonClicked: (Int) -> Unit = {},
     onResumeButtonClicked: (Int) -> Unit = {},
+    onStopButtonClicked: () -> Unit = {},
     showPlayButton: Boolean = false,
     showPauseButton: Boolean = false,
     showStopButton: Boolean = false,
@@ -67,7 +68,7 @@ fun CountDownTimerComponent(
             )
             ActionButton(
                 resourceId = R.drawable.ic_stop,
-                onButtonClicked = { /*TODO*/ },
+                onButtonClicked = onStopButtonClicked,
                 conteDescription = stringResource(id = R.string.stopButtonDesc),
                 isVisible = showStopButton
             )

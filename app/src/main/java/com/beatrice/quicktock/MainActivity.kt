@@ -31,7 +31,8 @@ class MainActivity : ComponentActivity() {
                         onPlayButtonClicked = timerViewModel::onStartCountDown,
                         onPauseButtonClicked = timerViewModel::onPauseCountingDown,
                         onResumeButtonClicked = timerViewModel::onResumeCountingDown,
-                        onSaveTimerBtnClicked = timerViewModel::onSaveTimer
+                        onSaveTimerBtnClicked = timerViewModel::onSaveTimer,
+                        onStopButtonClicked = timerViewModel::onStopCount
                     )
                 }
             }

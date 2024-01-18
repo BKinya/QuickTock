@@ -57,8 +57,7 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
             }
 
             on<UiEvent.OnStop> {
-                transitionTo(UiState.Idle) // Should take you back to the state that reads the timer duration from the sources... back to where I started
-                // Maybe this could wait just a bit until I implement reading duration from the sources
+                transitionTo(UiState.Idle)
             }
             on<UiEvent.OnFinish> {
                 transitionTo(UiState.Finished)
@@ -80,7 +79,6 @@ fun createStateMachine(): StateMachine<UiState, UiEvent, SideEffect> {
 
             on<UiEvent.OnStop> {
                 transitionTo(UiState.Idle)
-                // TODO: Update shared preferences
             }
         }
     }

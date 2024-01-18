@@ -8,17 +8,6 @@ import com.beatrice.quicktock.ui.components.CountDownTimerComponent
 import com.beatrice.quicktock.ui.components.SetTimerComponent
 import com.beatrice.quicktock.ui.stateMachine.UiState
 
-/**
- * Add the resources part in the readme
- *
- * Update the current UI tests
- * write and test setting timer screen
- * ensure it works well with other features push it on github
- *
- *
- *
- */
-
 @Composable
 fun TimerScreen(
     uiState: UiState,
@@ -27,7 +16,8 @@ fun TimerScreen(
     onPlayButtonClicked: (Int) -> Unit,
     onPauseButtonClicked: (Int) -> Unit,
     onResumeButtonClicked: (Int) -> Unit,
-    onSaveTimerBtnClicked: (Int) -> Unit
+    onSaveTimerBtnClicked: (Int) -> Unit,
+    onStopButtonClicked: () -> Unit
 ) {
     Scaffold(
         modifier = modifier
@@ -39,6 +29,7 @@ fun TimerScreen(
                 // show splash screen or something similar
                 onStart()
             }
+
             is UiState.SettingTimer -> {
                 SetTimerComponent(
                     onSaveTimerBtnClicked = onSaveTimerBtnClicked
@@ -60,10 +51,9 @@ fun TimerScreen(
             }
 
             is UiState.CountingDown -> {
-                println("state => counting down for reaallll")
-
                 CountDownTimerComponent(
                     onPauseButtonClicked = onPauseButtonClicked,
+                    onStopButtonClicked = onStopButtonClicked,
                     duration = uiState.timeLeft,
                     showPauseButton = true,
                     showStopButton = true
@@ -84,8 +74,7 @@ fun TimerScreen(
                 Text("Finished")
             }
 
-            else -> {
-            }
+
         }
     }
 }

@@ -66,7 +66,7 @@ class TimerViewModel(
             val transition = stateMachine.transition(UiEvent.OnPause(timeLeft))
             transitionSharedFlow.emit(transition)
 
-            // Stop the counting down
+            // Pause the counting down
 
             /***
              * This is a little fragile because changing the order makes test to fail
@@ -81,6 +81,13 @@ class TimerViewModel(
     fun onResumeCountingDown(timeLeft: Int) {
         viewModelScope.launch(dispatcher) {
             val transition = stateMachine.transition(UiEvent.OnResume(timeLeft))
+            transitionSharedFlow.emit(transition)
+        }
+    }
+
+    fun onStopCount(){
+        viewModelScope.launch(dispatcher) {
+            val transition = stateMachine.transition(UiEvent.OnStop)
             transitionSharedFlow.emit(transition)
         }
     }
